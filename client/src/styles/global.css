@@ -2,33 +2,35 @@
 
 :root {
   /* Brand */
-  --red: #b22234;
-  --red-dark: #8e1b2a;
-  --blue: #0074d9;
-  --blue-dark: #005bab;
-  --gradient: linear-gradient(100deg, #b22234 0%, #0074d9 100%);
+  --red: #ff2e5d;      /* Vibrant hot neon-pinkish red */
+  --red-dark: #cc1b43;
+  --blue: #00f0ff;     /* Cyan / Electric neon blue */
+  --blue-dark: #00b3cc;
+  --gradient: linear-gradient(135deg, #ff2e5d 0%, #00f0ff 100%);
+  --glow-red: 0 0 20px rgba(255, 46, 93, 0.35);
+  --glow-blue: 0 0 20px rgba(0, 240, 255, 0.35);
 
-  /* Neutrals */
-  --bg: #fafafa;
-  --surface: #ffffff;
-  --text: #1a1a2e;
-  --muted: #6b7280;
-  --border: rgba(0, 0, 0, 0.08);
+  /* Neutrals (Midnight / Deep space dark theme) */
+  --bg: #080810;
+  --surface: rgba(15, 15, 28, 0.65);
+  --text: #f1f5f9;     /* Slate 100 */
+  --muted: #94a3b8;    /* Slate 400 */
+  --border: rgba(255, 255, 255, 0.07);
 
   /* Status */
-  --success: #34d399;
-  --warning: #fbbf24;
-  --error: #f87171;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
 
   /* Type */
-  --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-heading: 'Outfit', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
 
-  --radius: 14px;
-  --radius-sm: 8px;
-  --shadow-sm: 0 1px 3px rgba(26, 26, 46, 0.06);
-  --shadow-md: 0 6px 24px rgba(26, 26, 46, 0.08);
-  --shadow-lg: 0 16px 48px rgba(26, 26, 46, 0.14);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.8);
   --container: 1180px;
 }
 
@@ -196,15 +198,15 @@ input, textarea, select {
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: rgba(0, 116, 217, 0.25);
+  box-shadow: 0 8px 30px rgba(0, 240, 255, 0.12), var(--glow-blue);
+  border-color: var(--blue);
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(15, 15, 28, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* ============ Forms ============ */
@@ -367,5 +369,5 @@ input, textarea, select {
 
 @media (max-width: 767px) {
   .section { padding: 48px 0; }
-  body.has-bottom-nav { padding-bottom: 68px; }
+  body.has-bottom-nav { padding-bottom: 76px; }
 }

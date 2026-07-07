@@ -3,8 +3,8 @@
 .hero {
   padding: 64px 0 48px;
   background:
-    radial-gradient(600px 300px at 90% 0%, rgba(0, 116, 217, 0.08), transparent),
-    radial-gradient(500px 260px at 5% 100%, rgba(178, 34, 52, 0.07), transparent);
+    radial-gradient(600px 300px at 90% 0%, rgba(0, 240, 255, 0.12), transparent),
+    radial-gradient(500px 260px at 5% 100%, rgba(255, 46, 93, 0.1), transparent);
 }
 
 .hero-inner {
@@ -90,7 +90,7 @@
 /* ============ Sections ============ */
 
 .section-alt {
-  background: #f2f4f8;
+  background: #0d0d16;
 }
 
 .section-cta {
@@ -201,7 +201,7 @@
 .page-hero {
   padding: 56px 0 40px;
   background:
-    radial-gradient(500px 240px at 85% 0%, rgba(0, 116, 217, 0.08), transparent);
+    radial-gradient(500px 240px at 85% 0%, rgba(0, 240, 255, 0.12), transparent);
 }
 
 .page-hero h1 {
@@ -309,7 +309,7 @@
 }
 
 .specs-table th {
-  background: #f5f6fa;
+  background: rgba(255, 255, 255, 0.03);
   font-weight: 600;
   width: 40%;
 }
