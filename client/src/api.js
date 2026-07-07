@@ -110,10 +110,10 @@ export const uploadImage = async (file) => {
 export const COMPANY = {
   name: 'DSK Printers',
   tagline: "India's Trusted DTF & UV DTF Sticker Manufacturer",
-  phone: '+91-7942540714',
+  phone: '+917942540714',
   phoneRaw: '917942540714',
   whatsapp: 'https://wa.me/917942540714',
-  email: 'info@dskprinters.in',
+  email: 'support@dskprinters.in',
   gst: '07DOZPK8646J1ZV',
   location: 'New Delhi, Delhi, India',
   established: 2015,

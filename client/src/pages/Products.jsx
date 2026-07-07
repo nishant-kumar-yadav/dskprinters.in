@@ -1,24 +1,22 @@
-import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
-import { fetchProducts, fetchCategories } from '../api.js'
-import ProductCard from '../components/ProductCard.jsx'
+import { Link } from 'react-router-dom'
+import { ArrowRight } from 'lucide-react'
+import { fetchCategories } from '../api.js'
 import { useReveal } from '../hooks/useReveal.js'
+import { useQuoteModal } from '../components/QuoteModal.jsx'
 import './pages.css'
 
 export default function Products() {
   const ref = useReveal()
-  const [filter, setFilter] = useState('all')
-  const { data: products, isLoading } = useQuery({ queryKey: ['products'], queryFn: fetchProducts })
-  const { data: categories } = useQuery({ queryKey: ['categories'], queryFn: fetchCategories })
-
-  const filtered =
-    filter === 'all' ? products || [] : (products || []).filter((p) => p.category === filter)
+  const { openQuote } = useQuoteModal()
+  const { data: categories, isLoading } = useQuery({ queryKey: ['categories'], queryFn: fetchCategories })
 
   return (
     <div className="page" ref={ref}>
       <Helmet>
-        <title>All Products | DSK Printers</title>
+        <title>Our Products | DTF & UV DTF Stickers, Heat Transfer Labels | DSK Printers</title>
+        <meta name="description" content="Browse DTF stickers, UV DTF stickers, heat transfer labels, silicone labels and custom printed apparel from DSK Printers, New Delhi. Bulk pricing, pan-India delivery." />
       </Helmet>
 
       <section className="page-hero">
@@ -27,43 +25,52 @@ export default function Products() {
             Our <span className="gradient-text">Products</span>
           </h1>
           <p>
-            Explore our full range of DTF stickers, UV DTF transfers, garment labels and custom
-            printing services. Bulk pricing available on all items.
+            Browse by category to find exactly what your business needs. 
+            Bulk pricing on all items.
           </p>
         </div>
       </section>
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <div className="filter-pills" role="group" aria-label="Filter products by category">
-            <button
-              className={`filter-pill${filter === 'all' ? ' active' : ''}`}
-              onClick={() => setFilter('all')}
-            >
-              All ({products?.length || 0})
-            </button>
-            {(categories || []).map((c) => (
-              <button
-                key={c.slug}
-                className={`filter-pill${filter === c.slug ? ' active' : ''}`}
-                onClick={() => setFilter(c.slug)}
-              >
-                {c.name} ({c.productCount})
-              </button>
-            ))}
-          </div>
-
-          <div className="grid grid-4">
+          <div className="grid grid-3">
             {isLoading
-              ? Array.from({ length: 8 }).map((_, i) => <div key={i} className="skeleton cat-skeleton" />)
-              : filtered.map((p) => <ProductCard key={p.slug} product={p} />)}
+              ? Array.from({ length: 6 }).map((_, i) => <div key={i} className="skeleton cat-skeleton" />)
+              : (categories || []).map((cat) => (
+                  <Link key={cat.slug} to={`/category/${cat.slug}`} className="category-directory-card card">
+                    <div className="cat-dir-image">
+                      <img src={cat.image || '/placeholder.jpg'} alt={cat.name} loading="lazy" />
+                    </div>
+                    <div className="cat-dir-body">
+                      <h2>{cat.name}</h2>
+                      <p className="cat-dir-count">{cat.productCount} products available</p>
+                      <span className="cat-dir-arrow">
+                        Browse <ArrowRight size={14} aria-hidden="true" />
+                      </span>
+                    </div>
+                  </Link>
+                ))}
           </div>
 
-          {!isLoading && filtered.length === 0 && (
+          {!isLoading && (!categories || categories.length === 0) && (
             <div className="empty-state">
-              <p>No products found in this category yet.</p>
+              <p>No categories found.</p>
             </div>
           )}
+        </div>
+      </section>
+
+      <section className="cta-band">
+        <div className="container cta-band-inner reveal">
+          <div>
+            <h2>Can't find what you need?</h2>
+            <p>We manufacture custom prints too. Tell us your requirement.</p>
+          </div>
+          <div className="cta-band-actions">
+            <button className="btn btn-white" onClick={() => openQuote({ source: 'products_cta_band' })}>
+              Get Custom Quote
+            </button>
+          </div>
         </div>
       </section>
     </div>

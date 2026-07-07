@@ -1,42 +1,93 @@
 import { Helmet } from 'react-helmet-async'
 import { COMPANY } from '../api.js'
-import { useQuoteModal } from '../components/QuoteModal.jsx'
 import { useReveal } from '../hooks/useReveal.js'
+import CTABand from '../components/CTABand.jsx'
+import { Factory, Layers, FileText, Truck, Clock, ShieldCheck, CheckCircle } from 'lucide-react'
 import './pages.css'
 
-const facts = [
-  { value: `Est. ${COMPANY.established}`, label: 'Serving India for 10+ years' },
-  { value: COMPANY.turnover, label: 'Annual Turnover' },
-  { value: COMPANY.employees, label: 'Team Members' },
-  { value: COMPANY.responseRate, label: 'Enquiry Response Rate' },
+const reasons = [
+  {
+    icon: <Factory size={24} className="reason-icon-blue" />,
+    title: "In-House Production",
+    desc: "Everything is manufactured inside our Delhi factory using state-of-the-art machinery. No middleman, no outsourcing."
+  },
+  {
+    icon: <Layers size={24} className="reason-icon-red" />,
+    title: "100 to 100,000 Pieces",
+    desc: "We support both startup fashion labels and bulk corporate requirements. Same quality check for 1 sheet or 10,000 sheets."
+  },
+  {
+    icon: <FileText size={24} className="reason-icon-blue" />,
+    title: "GST Registered Business",
+    desc: `Get proper tax invoices for your business. Fully compliant GST registered entity (${COMPANY.gst}).`
+  },
+  {
+    icon: <Truck size={24} className="reason-icon-red" />,
+    title: "Pan-India Delivery",
+    desc: "Fast, tracked shipping to pin codes all over India. Securely packed in tubes to prevent damage during transit."
+  },
+  {
+    icon: <Clock size={24} className="reason-icon-blue" />,
+    title: "Quick turnaround & support",
+    desc: `We respond to ${COMPANY.responseRate} of enquiries within a few hours. Dedicated customer coordinators for every order.`
+  },
+  {
+    icon: <ShieldCheck size={24} className="reason-icon-red" />,
+    title: "50+ Wash Durability",
+    desc: "Our prints use premium inks and hot-melt powders tested to survive 50+ wash cycles without fading or cracking."
+  }
 ]
 
 export default function About() {
   const ref = useReveal()
-  const { openQuote } = useQuoteModal()
 
   return (
     <div className="page" ref={ref}>
       <Helmet>
-        <title>About Us | DSK Printers</title>
+        <title>About Us | DSK Printers — Since 2015</title>
+        <meta name="description" content="DSK Printers is a trusted DTF & UV DTF sticker manufacturer established in 2015, based in New Delhi. GST registered, 500+ happy clients." />
       </Helmet>
 
-      <section className="page-hero">
+      {/* Hero Strip */}
+      <section className="about-hero">
         <div className="container">
+          <span className="section-eyebrow">ESTABLISHED 2015</span>
           <h1>
-            About <span className="gradient-text">DSK Printers</span>
+            India's Trusted <span className="brand-red">DTF</span> & <span className="brand-blue">UV DTF</span> Manufacturer
           </h1>
-          <p>
-            A New Delhi based manufacturer of DTF stickers, UV DTF transfers, heat transfer labels
-            and custom printed apparel — trusted by brands across India since {COMPANY.established}.
+          <p className="about-hero-sub">
+            Direct-to-Film transfer stickers, UV transfer decals, heat press labels and customized apparel for growing brands.
           </p>
+          
+          <div className="about-hero-pills">
+            <span className="hero-pill">
+              <CheckCircle size={14} className="icon-green" /> 500+ Clients
+            </span>
+            <span className="hero-pill">
+              <CheckCircle size={14} className="icon-green" /> 10+ Years Experience
+            </span>
+            <span className="hero-pill">
+              <CheckCircle size={14} className="icon-green" /> 85% Response Rate
+            </span>
+          </div>
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 24 }}>
+      {/* Our Story */}
+      <section className="section">
         <div className="container about-grid">
+          <div className="about-visual reveal">
+            <img
+              src="/images/cat-tshirt-printing.png"
+              alt="DSK Printers production facility in New Delhi"
+              onError={(e) => {
+                e.currentTarget.src = '/placeholder.jpg'
+              }}
+            />
+          </div>
+          
           <div className="about-copy reveal">
-            <span className="section-eyebrow">Our Story</span>
+            <span className="section-eyebrow">Our Journey</span>
             <h2 className="section-title">Print Partners to Growing Brands</h2>
             <p>
               DSK Printers started in {COMPANY.established} with a single heat press and a simple
@@ -52,46 +103,66 @@ export default function About() {
               precise cutting.
             </p>
             <p>
-              As a GST-registered business ({COMPANY.gst}), we provide proper invoicing, reliable
+              As a GST-registered business, we provide proper invoicing, reliable
               dispatch timelines and a dedicated support line with an {COMPANY.responseRate} enquiry
               response rate.
             </p>
-            <button
-              className="btn btn-primary"
-              style={{ width: 'fit-content', marginTop: 8 }}
-              onClick={() => openQuote({ source: 'about_page' })}
-            >
-              Work With Us
-            </button>
-          </div>
-          <div className="about-visual reveal">
-            <img
-              src="/images/cat-tshirt-printing.png"
-              alt="DSK Printers production facility in New Delhi"
-              onError={(e) => {
-                e.currentTarget.src = '/placeholder.jpg'
-              }}
-            />
           </div>
         </div>
       </section>
 
-      <section className="section section-alt">
+      {/* Facts Ticker */}
+      <section className="about-ticker-section">
         <div className="container">
-          <div className="section-head reveal">
-            <span className="section-eyebrow">At a Glance</span>
-            <h2 className="section-title">Company Facts</h2>
+          <div className="about-ticker">
+            <div className="ticker-item">
+              <strong>Since 2015</strong>
+              <span>Established</span>
+            </div>
+            <div className="ticker-item">
+              <strong>{COMPANY.turnover}</strong>
+              <span>Annual Turnover</span>
+            </div>
+            <div className="ticker-item">
+              <strong>{COMPANY.employees}</strong>
+              <span>Expert Team</span>
+            </div>
+            <div className="ticker-item">
+              <strong>500+</strong>
+              <span>Happy Brands</span>
+            </div>
           </div>
-          <div className="grid grid-4 reveal">
-            {facts.map((f) => (
-              <div key={f.label} className="fact-card card">
-                <strong>{f.value}</strong>
-                <span>{f.label}</span>
+        </div>
+      </section>
+
+      {/* Why Choose Us */}
+      <section className="section why-choose-section">
+        <div className="container">
+          <div className="section-head reveal text-center">
+            <span className="section-eyebrow">Built for Quality</span>
+            <h2 className="section-title">Why Garment Brands Trust Us</h2>
+          </div>
+          
+          <div className="why-grid reveal">
+            {reasons.map((r, index) => (
+              <div key={index} className="reason-card card">
+                <div className="reason-icon-wrapper">
+                  {r.icon}
+                </div>
+                <h3>{r.title}</h3>
+                <p>{r.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
+
+      {/* CTA Band */}
+      <CTABand 
+        headline="Ready to Partner with Us?" 
+        subtext="Upload your designs today and get high-quality custom samples dispatched fast." 
+        variant="red"
+      />
     </div>
   )
 }

@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { Menu, X, Phone, ChevronDown } from 'lucide-react'
+import { Menu, X, Phone, ChevronDown, Search } from 'lucide-react'
 import { fetchCategories, COMPANY } from '../api.js'
 import { useQuoteModal } from './QuoteModal.jsx'
+import SearchModal from './SearchModal.jsx'
 import './navbar.css'
 
 const links = [
@@ -17,6 +18,7 @@ const links = [
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [megaOpen, setMegaOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const { openQuote } = useQuoteModal()
   const location = useLocation()
   const { data: categories } = useQuery({ queryKey: ['categories'], queryFn: fetchCategories })
@@ -24,6 +26,7 @@ export default function Navbar() {
   useEffect(() => {
     setOpen(false)
     setMegaOpen(false)
+    setSearchOpen(false)
   }, [location.pathname])
 
   return (
@@ -32,10 +35,7 @@ export default function Navbar() {
         <Link to="/" className="navbar-brand" aria-label="DSK Printers home">
           <img src="/images/logo.png" alt="DSK Printers logo" width="42" height="42" />
           <span>
-            <strong>
-              <span className="brand-red">DS</span>
-              <span className="brand-blue">K</span> Printers
-            </strong>
+            <strong>DSK Printers</strong>
             <small>New Delhi, India</small>
           </span>
         </Link>
@@ -80,8 +80,8 @@ export default function Navbar() {
             <Phone size={16} aria-hidden="true" />
             {COMPANY.phone}
           </a>
-          <button className="btn btn-primary navbar-cta" onClick={() => openQuote({ source: 'navbar_cta' })}>
-            Get Quote
+          <button className="btn btn-outline navbar-search-btn" aria-label="Search Products" style={{ display: 'inline-flex', padding: '10px' }} onClick={() => setSearchOpen(true)}>
+            <Search size={18} />
           </button>
           <button
             className="navbar-burger"
@@ -101,11 +101,10 @@ export default function Navbar() {
               {l.label}
             </NavLink>
           ))}
-          <button className="btn btn-primary" onClick={() => openQuote({ source: 'navbar_cta' })}>
-            Get Quote
-          </button>
         </div>
       )}
+
+      <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   )
 }

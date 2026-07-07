@@ -43,11 +43,11 @@
     right: 0;
     z-index: 50;
     display: flex;
-    background: rgba(15, 15, 28, 0.85);
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
     padding-bottom: env(safe-area-inset-bottom, 0);
   }
 }
@@ -73,15 +73,10 @@
 
 .bottom-nav-item.active {
   color: var(--blue);
-  text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
 }
 
 .bottom-nav-cta {
   color: var(--red);
-}
-
-.bottom-nav-cta:active {
-  text-shadow: 0 0 10px rgba(255, 46, 93, 0.4);
 }
 
 /* Cold start banner */

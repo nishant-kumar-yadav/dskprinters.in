@@ -1,12 +1,12 @@
 .footer {
-  background: #090911;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.82);
+  background: #0f172a;
+  border-top: 1px solid #1e293b;
+  color: rgba(255, 255, 255, 0.85);
   margin-top: 48px;
 }
 
 .footer a {
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.7);
   transition: color 0.15s ease;
 }
 
@@ -37,7 +37,7 @@
 
 .footer-brand p {
   font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .footer-logo {
@@ -50,7 +50,7 @@
   border-radius: 10px;
 }
 
-.footer-logo span {
+.footer-logo > span {
   display: flex;
   flex-direction: column;
   line-height: 1.2;
@@ -62,9 +62,17 @@
   color: #fff;
 }
 
+.brand-text .brand-red,
+.brand-text .brand-blue {
+  font-style: italic;
+  font-weight: 900;
+  font-size: 1.25rem;
+  letter-spacing: -0.04em;
+}
+
 .footer-logo small {
   font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.45);
 }
 
 .brand-red { color: var(--red); }
@@ -103,7 +111,7 @@
 
 .footer-hours {
   font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .footer-wa {
@@ -112,7 +120,7 @@
 }
 
 .footer-bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding: 18px 0;
 }
 
@@ -122,5 +130,5 @@
   justify-content: space-between;
   gap: 8px;
   font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.4);
 }

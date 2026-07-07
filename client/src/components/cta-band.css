@@ -1,0 +1,113 @@
+.cta-band {
+  padding: 48px 0;
+  color: #ffffff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-band-red {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+}
+
+.cta-band-blue {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+}
+
+.cta-band-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .cta-band {
+    text-align: left;
+    padding: 64px 0;
+  }
+  .cta-band-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+.cta-band-content {
+  max-width: 580px;
+}
+
+.cta-band-content h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.cta-band-content p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.cta-band-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+@media (min-width: 480px) {
+  .cta-band-actions {
+    flex-direction: row;
+    justify-content: center;
+    width: auto;
+  }
+}
+
+.cta-band-actions .btn {
+  min-height: 48px;
+  padding: 12px 28px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cta-band-actions .btn:active {
+  transform: scale(0.97);
+}
+
+.cta-btn-main {
+  background: #ffffff !important;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.cta-band-red .cta-btn-main {
+  color: #dc2626 !important;
+}
+
+.cta-band-blue .cta-btn-main {
+  color: #1d4ed8 !important;
+}
+
+.cta-btn-main:hover {
+  background: #f8fafc !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.cta-btn-alt {
+  background: transparent !important;
+  border: 2px solid #ffffff !important;
+  color: #ffffff !important;
+}
+
+.cta-btn-alt:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}

@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
@@ -9,6 +10,8 @@ import {
   Sparkles,
   Star,
   MessageCircle,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react'
 import { fetchProducts, fetchCategories, COMPANY } from '../api.js'
 import { useQuoteModal } from '../components/QuoteModal.jsx'
@@ -46,9 +49,46 @@ const features = [
   },
 ]
 
+const heroSlides = [
+  {
+    title: "UV DTF Stickers",
+    price: "₹2.50 / sq. inch onwards",
+    desc: "Permanent scratch-proof stickers for metal, glass, plastic, wood and leather branding.",
+    badge: "Most Popular for Merch",
+    image: "/images/cat-uv-dtf.png",
+    slug: "uv-dtf-sticker"
+  },
+  {
+    title: "DTF Stickers",
+    price: "₹1.20 / sq. inch onwards",
+    desc: "High stretch garment transfer stickers for fabrics, t-shirts, caps, bags and uniforms.",
+    badge: "Garment Decoration Standard",
+    image: "/images/cat-dtf.png",
+    slug: "dtf-sticker"
+  },
+  {
+    title: "Custom Printed Apparel",
+    price: "₹150 / piece onwards",
+    desc: "Premium quality corporate t-shirts, promotional t-shirts and uniforms with your branding.",
+    badge: "Corporate & Event Merch",
+    image: "/images/cat-custom-tshirt.png",
+    slug: "customized-t-shirt"
+  },
+  {
+    title: "Silicone Heat Transfer Labels",
+    price: "₹3.50 / piece onwards",
+    desc: "Tactile premium 3D labels for luxury sportswear, shirts, and fashion brand tagging.",
+    badge: "Premium Sportswear Detail",
+    image: "/images/cat-silicone.png",
+    slug: "silicone-heat-transfer-label"
+  }
+]
+
 export default function Home() {
   const ref = useReveal()
   const { openQuote } = useQuoteModal()
+  const [activeSlide, setActiveSlide] = useState(0)
+
   const { data: products, isLoading: productsLoading } = useQuery({
     queryKey: ['products'],
     queryFn: fetchProducts,
@@ -61,33 +101,99 @@ export default function Home() {
   const featured = (products || []).filter((p) => p.featured).slice(0, 8)
   const topCategories = (categories || []).slice(0, 8)
 
+  // Carousel Autoplay
+  const timerRef = useRef(null)
+
+  const resetTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % heroSlides.length)
+    }, 4500)
+  }
+
+  useEffect(() => {
+    resetTimer()
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current)
+    }
+  }, [])
+
+  const nextSlide = () => {
+    setActiveSlide((prev) => (prev + 1) % heroSlides.length)
+    resetTimer()
+  }
+  const prevSlide = () => {
+    setActiveSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)
+    resetTimer()
+  }
+  const goToSlide = (index) => {
+    setActiveSlide(index)
+    resetTimer()
+  }
+
+  const currentSlide = heroSlides[activeSlide]
+
   return (
     <div className="page" ref={ref}>
       <Helmet>
-        <title>DSK Printers | DTF &amp; UV DTF Sticker Manufacturer in New Delhi</title>
+        <title>DSK Printers | DTF & UV DTF Sticker Manufacturer in New Delhi</title>
+        <meta name="description" content="Buy DTF stickers, UV DTF stickers, heat transfer labels and custom printed t-shirts from DSK Printers, a trusted manufacturer in New Delhi. Bulk pricing, pan-India delivery." />
       </Helmet>
 
       {/* Hero */}
       <section className="hero">
         <div className="container hero-inner">
+          <div className="hero-visual">
+            <div className="hero-carousel-container">
+              <Link to={`/category/${currentSlide.slug}`} className="hero-carousel-link">
+                <img
+                  key={activeSlide}
+                  src={currentSlide.image}
+                  alt={currentSlide.title}
+                  className="hero-carousel-image fade-in"
+                  onError={(e) => {
+                    e.currentTarget.src = '/placeholder.jpg'
+                  }}
+                />
+              </Link>
+              <button onClick={prevSlide} className="carousel-btn prev" aria-label="Previous product">
+                <ChevronLeft size={20} />
+              </button>
+              <button onClick={nextSlide} className="carousel-btn next" aria-label="Next product">
+                <ChevronRight size={20} />
+              </button>
+              <div className="carousel-dots">
+                {heroSlides.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    className={`carousel-dot ${index === activeSlide ? 'active' : ''}`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+
           <div className="hero-copy">
             <span className="badge badge-blue hero-badge">
-              <Star size={12} aria-hidden="true" /> Trusted since {COMPANY.established}
+              <Star size={12} aria-hidden="true" /> {currentSlide.badge}
             </span>
-            <h1>
-              India&apos;s Trusted <span className="gradient-text">DTF &amp; UV DTF</span> Sticker
-              Manufacturer
+            <h1 className="hero-carousel-title">
+              {currentSlide.title}
             </h1>
-            <p>
-              Heat transfer stickers, garment labels and custom t-shirt printing from our New Delhi
-              facility. Premium quality, bulk pricing and pan-India delivery.
+            <div className="hero-carousel-price">
+              Starting from <span className="text-highlight">{currentSlide.price.split(' ')[0]}</span> {currentSlide.price.split(' ').slice(1).join(' ')}
+            </div>
+            <p className="hero-carousel-desc">
+              {currentSlide.desc}
             </p>
             <div className="hero-actions">
-              <button className="btn btn-primary" onClick={() => openQuote({ source: 'hero_cta' })}>
+              <button className="btn btn-primary" onClick={() => openQuote({ source: `hero_carousel_${currentSlide.slug}` })}>
                 Get Best Quote <ArrowRight size={16} aria-hidden="true" />
               </button>
-              <Link to="/products" className="btn btn-outline">
-                Browse Products
+              <Link to={`/category/${currentSlide.slug}`} className="btn btn-outline">
+                View Details
               </Link>
             </div>
             <div className="hero-stats">
@@ -98,15 +204,6 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </div>
-          <div className="hero-visual">
-            <img
-              src="/images/cat-uv-dtf.png"
-              alt="UV DTF stickers manufactured by DSK Printers"
-              onError={(e) => {
-                e.currentTarget.src = '/placeholder.jpg'
-              }}
-            />
           </div>
         </div>
       </section>
@@ -122,7 +219,7 @@ export default function Home() {
               decoration and branding.
             </p>
           </div>
-          <div className="grid grid-4 reveal">
+          <div className="grid grid-4 mobile-swipe-list reveal">
             {categoriesLoading
               ? Array.from({ length: 8 }).map((_, i) => <div key={i} className="skeleton cat-skeleton" />)
               : topCategories.map((c) => (
@@ -158,7 +255,7 @@ export default function Home() {
             <h2 className="section-title">Featured Products</h2>
             <p className="section-sub">Our most ordered transfers and labels, loved by brands across India.</p>
           </div>
-          <div className="grid grid-4 reveal">
+          <div className="grid grid-4 mobile-swipe-list reveal">
             {productsLoading
               ? Array.from({ length: 8 }).map((_, i) => <div key={i} className="skeleton cat-skeleton" />)
               : featured.map((p) => <ProductCard key={p.slug} product={p} />)}

@@ -14,6 +14,8 @@ const categorySchema = new mongoose.Schema(
     slug: { type: String, unique: true, lowercase: true },
     image: { type: String, default: '' },
     order: { type: Number, default: 0 },
+    description: { type: String, default: '' },
+    startingPrice: { type: String, default: '' },
   },
   { timestamps: true }
 )

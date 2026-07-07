@@ -15,10 +15,7 @@ export default function Footer() {
           <Link to="/" className="footer-logo" aria-label="DSK Printers home">
             <img src="/images/logo.png" alt="DSK Printers logo" width="44" height="44" />
             <span>
-              <strong>
-                <span className="brand-red">DS</span>
-                <span className="brand-blue">K</span> Printers
-              </strong>
+              <strong>DSK Printers</strong>
               <small>Since {COMPANY.established}</small>
             </span>
           </Link>

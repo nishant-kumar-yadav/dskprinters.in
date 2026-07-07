@@ -7,37 +7,38 @@ This document contains rules and styling patterns that all agents working on thi
 
 ---
 
-## 🎨 Design System: "Deep Space Neon"
+## 🎨 Design System: "Clean Premium Brand Accent"
 
-To reflect the "Red & Neon Blue" logo in a premium, modern way, the entire UI should use a dark mode base with vibrant glowing accents.
+To reflect the "Red & Blue" logo in a premium, modern way, the entire UI should use a clean, light base with high-contrast bold brand accents.
 
 ### 1. Colors
-- **Main Background**: `#080810` (Midnight Black/Violet)
-- **Surface Background**: `#0f0f1c` (Dark Slate Card/Section background)
-- **Brand Red (Neon)**: `#ff2e5d` (Vibrant hot-neon pinkish red)
-- **Brand Blue (Neon)**: `#00f0ff` (Cyan / Electric neon blue)
-- **Text Primary**: `#f1f5f9` (Slate 100)
-- **Text Muted**: `#94a3b8` (Slate 400)
-- **Border**: `rgba(255, 255, 255, 0.06)`
+- **Main Background**: `#ffffff` (Pure white for content readability)
+- **Surface Background**: `#f8fafc` (Light slate for sections, alternate strips, and table headers)
+- **Brand Red**: `#dc2626` (Proper deep brand red for primary CTA actions like "Get Quote")
+- **Brand Blue**: `#1d4ed8` (Vibrant royal blue for links, highlights, and secondary elements)
+- **Text Primary**: `#0f172a` (Deep slate navy for high-contrast heading and body readability)
+- **Text Muted**: `#64748b` (Slate 400 for descriptions, secondary specs, and labels)
+- **Border**: `#e2e8f0` (Very subtle clean light gray for borders and separators)
 
 ### 2. Typography
-- **Headings**: `font-family: 'Outfit', sans-serif;` with letter-spacing `-0.03em`.
-- **Body**: `font-family: 'Inter', sans-serif;` with letter-spacing `-0.01em`.
+- **Headings & Body**: `font-family: 'Plus Jakarta Sans', sans-serif;`
+  - Headings: Bold/ExtraBold (`font-weight: 700` or `800`) with letter-spacing `-0.02em`.
+  - Body: Regular (`font-weight: 400` or `500`) with letter-spacing `-0.01em`.
 
-### 3. Glassmorphism & Card Design
-All elements (cards, headers, dialogs) should feel like floating glass plates:
-- **Card Background**: `rgba(15, 15, 28, 0.65)`
-- **Card Backdrop Filter**: `blur(16px)`
-- **Card Border**: `1px solid rgba(255, 255, 255, 0.07)`
-- **Hover state**: Light up the border using a subtle linear gradient (Neon Red → Neon Blue) or add a soft glowing drop-shadow (`box-shadow: 0 0 25px rgba(0, 240, 255, 0.15)`).
+### 3. Premium Card & Elevation Design
+Cards should feel structural, clean, and elevated:
+- **Card Background**: `#ffffff`
+- **Card Border**: `1px solid #e2e8f0`
+- **Card Shadow**: `0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03)`
+- **Hover State**: Cards scale slightly (`transform: translateY(-2px)`) and cast a deep soft shadow (`box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08)`).
 
 ---
 
 ## 🔄 Animations & Transitions
 
 - **Page Transitions**: Soft slide-up and fade (`transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)`).
-- **Hover states**: Transition duration must be `0.2s` or `0.25s` with `ease-out` or `cubic-bezier`.
-- **Glow Effects**: Soft hover glow on CTA buttons and key interaction badges.
+- **Hover States**: Hover transitions must use `0.2s` or `0.25s` duration with `ease-out` or `cubic-bezier`.
+- **Button Feedback**: Tactile click/press scaling (`transform: scale(0.97)`) on action.
 
 ---
 

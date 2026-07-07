@@ -13,6 +13,9 @@ const productSchema = new mongoose.Schema(
     inStock: { type: Boolean, default: true },
     featured: { type: Boolean, default: false },
     order: { type: Number, default: 0 },
+    tags: { type: [String], default: [] },
+    applications: { type: [String], default: [] },
+    alternateNames: { type: [String], default: [] },
   },
   { timestamps: true }
 )
