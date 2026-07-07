@@ -1,0 +1,13 @@
+{
+  "name": "dsk-printers",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -k -n server,client -c blue,green \"pnpm --filter dsk-server dev\" \"pnpm --filter dsk-client dev\"",
+    "build": "pnpm --filter dsk-client build",
+    "seed": "pnpm --filter dsk-server seed"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
