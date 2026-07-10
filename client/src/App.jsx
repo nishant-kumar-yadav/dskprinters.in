@@ -15,6 +15,7 @@ import Reviews from './pages/Reviews.jsx'
 import Contact from './pages/Contact.jsx'
 import SeoLandingPage from './pages/SeoLandingPage.jsx'
 import SearchResults from './pages/SearchResults.jsx'
+import PopularSearches from './pages/PopularSearches.jsx'
 import Admin from './admin/Admin.jsx'
 import NotFound from './pages/NotFound.jsx'
 
@@ -52,6 +53,7 @@ export default function App() {
           <Route path="/product/:slug" element={<ProductDetail />} />
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/popular-searches" element={<PopularSearches />} />
           <Route path="/s/:keyword" element={<SeoLandingPage />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="*" element={<NotFound />} />

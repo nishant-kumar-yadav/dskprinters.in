@@ -60,6 +60,18 @@ export default function Products() {
         </div>
       </section>
 
+      <section className="seo-directory-banner bg-light section">
+        <div className="container" style={{ textAlign: 'center', padding: '40px 0' }}>
+          <h2 style={{ fontSize: '1.8rem', marginBottom: '16px', fontWeight: '800' }}>Explore Our Local Manufacturing Network</h2>
+          <p style={{ color: '#64748b', marginBottom: '24px', fontSize: '1.1rem' }}>
+            Looking for local manufacturing or wholesale supply? Browse our popular searches and service areas across India.
+          </p>
+          <Link to="/popular-searches" className="btn btn-outline" style={{ display: 'inline-flex', padding: '12px 24px' }}>
+            View All Locations & Categories
+          </Link>
+        </div>
+      </section>
+
       <section className="cta-band">
         <div className="container cta-band-inner reveal">
           <div>

@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
-import { ChevronRight, Phone, MessageCircle, BadgeCheck, Truck, IndianRupee } from 'lucide-react'
+import { ChevronRight, Phone, MessageCircle, BadgeCheck, Truck, IndianRupee, MapPin } from 'lucide-react'
 import { fetchProducts, COMPANY } from '../api.js'
 import ProductCard from '../components/ProductCard.jsx'
 import { useQuoteModal } from '../components/QuoteModal.jsx'
@@ -100,6 +100,20 @@ export default function SeoLandingPage() {
               <Phone size={16} aria-hidden="true" /> Call Now
             </a>
           </div>
+
+          {parsed.location && (
+            <div className="seo-local-banner" style={{
+              display: 'flex', alignItems: 'flex-start', gap: '12px', marginTop: '24px', 
+              padding: '16px', background: '#eff6ff', border: '1px solid #bfdbfe', 
+              borderRadius: '12px', color: '#1e3a8a', textAlign: 'left'
+            }}>
+              <MapPin size={24} style={{ flexShrink: 0, marginTop: '2px', color: '#3b82f6' }} />
+              <div>
+                <strong style={{ display: 'block', fontSize: '0.95rem', marginBottom: '4px' }}>Fast Shipping to {parsed.location.name}</strong>
+                <span style={{ fontSize: '0.85rem' }}>We provide priority dispatch for wholesale printing orders to {parsed.location.name} via trusted logistics partners. Bulk pricing applied.</span>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
