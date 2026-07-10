@@ -4,24 +4,118 @@ import Product from './models/Product.js'
 const IMG = (name) => `/images/${name}.png`
 
 export const categories = [
-  { name: 'UV DTF Sticker', slug: 'uv-dtf-sticker', image: IMG('cat-uv-dtf'), order: 1 },
-  { name: 'DTF Sticker', slug: 'dtf-sticker', image: IMG('cat-dtf'), order: 2 },
-  { name: 'Heat Transfer Stickers', slug: 'heat-transfer-stickers', image: IMG('cat-heat-transfer'), order: 3 },
-  { name: 'Heat Transfer Sticker', slug: 'heat-transfer-sticker', image: IMG('cat-heat-transfer-2'), order: 4 },
-  { name: 'T-Shirt Sticker', slug: 't-shirt-sticker', image: IMG('cat-tshirt-sticker'), order: 5 },
-  { name: 'T Shirt Printing Services', slug: 't-shirt-printing-services', image: IMG('cat-tshirt-printing'), order: 6 },
-  { name: 'Garment Labels', slug: 'garment-labels', image: IMG('cat-garment-labels'), order: 7 },
-  { name: 'Cartoon Character Heat Press', slug: 'cartoon-character-heat-press', image: IMG('cat-cartoon'), order: 8 },
-  { name: 'Transfer Label', slug: 'transfer-label', image: IMG('cat-transfer-label'), order: 9 },
-  { name: 'Corporate T-Shirt', slug: 'corporate-t-shirt', image: IMG('cat-corporate-tshirt'), order: 10 },
-  { name: 'Silicone Heat Transfer Label', slug: 'silicone-heat-transfer-label', image: IMG('cat-silicone'), order: 11 },
-  { name: 'Polycarbonate Sticker', slug: 'polycarbonate-sticker', image: IMG('cat-polycarbonate'), order: 12 },
-  { name: 'Clothing Labels', slug: 'clothing-labels', image: IMG('cat-clothing-labels'), order: 13 },
-  { name: 'Customized T Shirt', slug: 'customized-t-shirt', image: IMG('cat-custom-tshirt'), order: 14 },
-  { name: 'Promotional T Shirt', slug: 'promotional-t-shirt', image: IMG('cat-promo-tshirt'), order: 15 },
+  { name: 'UV DTF Sticker', slug: 'uv-dtf-sticker', image: IMG('cat-uv-dtf'), order: 1, defaultTags: ['uv dtf', 'uv label', 'ink transfer', 'waterproof sticker', 'vinyl sticker', 'sticker for mug', 'sticker for bottle'], defaultApplications: ['glass', 'wood', 'metal', 'plastic', 'mug', 'bottle', 'phone cover', 'laptop'], defaultAlternateNames: ['UV DTF Label', 'INK Transfer Sticker', 'Vinyl Sticker', 'Waterproof Sticker'] },
+  { name: 'DTF Sticker', slug: 'dtf-sticker', image: IMG('cat-dtf'), order: 2, defaultTags: ['dtf', 'dtf transfer', 'heat press transfer', 'garment transfer', 'tshirt print'], defaultApplications: ['t-shirt', 'sweatshirt', 'bags', 'hoodies', 'caps', 'uniforms'], defaultAlternateNames: ['DTF Transfer', 'Heat Press Transfer', 'Garment Transfer'] },
+  { name: 'Heat Transfer Stickers', slug: 'heat-transfer-stickers', image: IMG('cat-heat-transfer'), order: 3, defaultTags: ['heat transfer', 'heat press sticker', 'iron-on transfer', 'htv'], defaultApplications: ['fabric', 'cotton', 'polyester', 'sportswear'], defaultAlternateNames: ['Heat Press Sticker', 'Iron-on Transfer'] },
+  { name: 'Heat Transfer Sticker', slug: 'heat-transfer-sticker', image: IMG('cat-heat-transfer-2'), order: 4, defaultTags: ['heat transfer', 'heat press sticker', 'iron-on transfer', 'plastisol transfer'], defaultApplications: ['fabric', 'cotton', 'polyester', 'sportswear'], defaultAlternateNames: ['Heat Press Sticker', 'Iron-on Transfer'] },
+  { name: 'T-Shirt Sticker', slug: 't-shirt-sticker', image: IMG('cat-tshirt-sticker'), order: 5, defaultTags: ['tshirt sticker', 'dtf', 'heat press transfer', 'garment transfer'], defaultApplications: ['t-shirt', 'hoodies', 'sweatshirt', 'streetwear'], defaultAlternateNames: ['T-Shirt Transfer', 'Heat Press Transfer'] },
+  { name: 'T Shirt Printing Services', slug: 't-shirt-printing-services', image: IMG('cat-tshirt-printing'), order: 6, defaultTags: ['tshirt printing', 'custom tshirt', 'corporate tshirt', 'promotional tshirt', 'event tshirt'], defaultApplications: ['corporate events', 'brand merchandise', 'uniforms'], defaultAlternateNames: ['Corporate T-shirts', 'Promotional T-shirts', 'Event T-shirts'] },
+  { name: 'Garment Labels', slug: 'garment-labels', image: IMG('cat-garment-labels'), order: 7, defaultTags: ['garment label', 'clothing tag', 'neck label', 'care label', 'heat transfer label'], defaultApplications: ['t-shirts', 'uniforms', 'sportswear', 'fashion brands'], defaultAlternateNames: ['Garment Labels', 'Clothing Tags', 'Neck Labels', 'Care Labels'] },
+  { name: 'Cartoon Character Heat Press', slug: 'cartoon-character-heat-press', image: IMG('cat-cartoon'), order: 8, defaultTags: ['cartoon sticker', 'heat press transfer', 'kidswear transfer', 'dtf'], defaultApplications: ['t-shirt', 'kidswear', 'uniforms', 'bags'], defaultAlternateNames: ['Cartoon Transfer', 'Kids Heat Press Sticker'] },
+  { name: 'Transfer Label', slug: 'transfer-label', image: IMG('cat-transfer-label'), order: 9, defaultTags: ['transfer label', 'garment label', 'neck label', 'care label', 'heat transfer label'], defaultApplications: ['t-shirts', 'uniforms', 'sportswear', 'fashion brands'], defaultAlternateNames: ['Garment Labels', 'Clothing Tags', 'Neck Labels', 'Care Labels'] },
+  { name: 'Corporate T-Shirt', slug: 'corporate-t-shirt', image: IMG('cat-corporate-tshirt'), order: 10, defaultTags: ['corporate tshirt', 'custom tshirt', 'uniform tshirt', 'tshirt printing'], defaultApplications: ['corporate events', 'brand merchandise', 'uniforms'], defaultAlternateNames: ['Corporate T-shirts', 'Promotional T-shirts', 'Event T-shirts'] },
+  { name: 'Silicone Heat Transfer Label', slug: 'silicone-heat-transfer-label', image: IMG('cat-silicone'), order: 11, defaultTags: ['silicone label', '3d label', 'raised label', 'rubber label'], defaultApplications: ['sportswear', 'luxury fashion', 'premium branding'], defaultAlternateNames: ['3D Labels', 'Raised Labels', 'Rubber Labels'] },
+  { name: 'Polycarbonate Sticker', slug: 'polycarbonate-sticker', image: IMG('cat-polycarbonate'), order: 12, defaultTags: ['polycarbonate sticker', 'dome sticker', 'waterproof sticker', 'industrial sticker'], defaultApplications: ['metal', 'plastic', 'appliances', 'machinery'], defaultAlternateNames: ['Dome Sticker', 'Panel Sticker', 'Waterproof Sticker'] },
+  { name: 'Clothing Labels', slug: 'clothing-labels', image: IMG('cat-clothing-labels'), order: 13, defaultTags: ['clothing label', 'garment label', 'clothing tag', 'care label', 'brand label'], defaultApplications: ['t-shirts', 'uniforms', 'sportswear', 'fashion brands'], defaultAlternateNames: ['Garment Labels', 'Clothing Tags', 'Neck Labels', 'Care Labels'] },
+  { name: 'Customized T Shirt', slug: 'customized-t-shirt', image: IMG('cat-custom-tshirt'), order: 14, defaultTags: ['custom tshirt', 'customized tshirt', 'tshirt printing', 'personalized tshirt'], defaultApplications: ['corporate events', 'brand merchandise', 'gifting', 'celebrations'], defaultAlternateNames: ['Corporate T-shirts', 'Promotional T-shirts', 'Event T-shirts'] },
+  { name: 'Promotional T Shirt', slug: 'promotional-t-shirt', image: IMG('cat-promo-tshirt'), order: 15, defaultTags: ['promotional tshirt', 'event tshirt', 'tshirt printing', 'bulk tshirt'], defaultApplications: ['corporate events', 'trade shows', 'brand promotion', 'marathons'], defaultAlternateNames: ['Promotional T-shirts', 'Event T-shirts', 'Bulk T-shirts'] },
 ]
 
-export const products = [
+// ---------------------------------------------------------------------------
+// SEO ENRICHMENT (see SEO-PLAN.md)
+// Category-level tags / applications / alternateNames merged into every
+// product below. Per-product overrides can be added in PRODUCT_SEO_OVERRIDES.
+// ---------------------------------------------------------------------------
+
+const CATEGORY_SEO = {
+  'uv-dtf-sticker': {
+    tags: ['uv dtf', 'uv label', 'ink transfer', 'waterproof sticker', 'vinyl sticker', 'sticker for mug', 'sticker for bottle'],
+    applications: ['glass', 'wood', 'metal', 'plastic', 'mug', 'bottle', 'phone cover', 'laptop'],
+    alternateNames: ['UV DTF Label', 'INK Transfer Sticker', 'Vinyl Sticker', 'Waterproof Sticker'],
+  },
+  'dtf-sticker': {
+    tags: ['dtf', 'dtf transfer', 'heat press transfer', 'garment transfer', 'tshirt print'],
+    applications: ['t-shirt', 'sweatshirt', 'bags', 'hoodies', 'caps', 'uniforms'],
+    alternateNames: ['DTF Transfer', 'Heat Press Transfer', 'Garment Transfer'],
+  },
+  'heat-transfer-stickers': {
+    tags: ['heat transfer', 'heat press sticker', 'iron-on transfer', 'htv'],
+    applications: ['fabric', 'cotton', 'polyester', 'sportswear'],
+    alternateNames: ['Heat Press Sticker', 'Iron-on Transfer'],
+  },
+  'heat-transfer-sticker': {
+    tags: ['heat transfer', 'heat press sticker', 'iron-on transfer', 'plastisol transfer'],
+    applications: ['fabric', 'cotton', 'polyester', 'sportswear'],
+    alternateNames: ['Heat Press Sticker', 'Iron-on Transfer'],
+  },
+  't-shirt-sticker': {
+    tags: ['tshirt sticker', 'dtf', 'heat press transfer', 'garment transfer'],
+    applications: ['t-shirt', 'hoodies', 'sweatshirt', 'streetwear'],
+    alternateNames: ['T-Shirt Transfer', 'Heat Press Transfer'],
+  },
+  't-shirt-printing-services': {
+    tags: ['tshirt printing', 'custom tshirt', 'corporate tshirt', 'promotional tshirt', 'event tshirt'],
+    applications: ['corporate events', 'brand merchandise', 'uniforms'],
+    alternateNames: ['Corporate T-shirts', 'Promotional T-shirts', 'Event T-shirts'],
+  },
+  'garment-labels': {
+    tags: ['garment label', 'clothing tag', 'neck label', 'care label', 'heat transfer label'],
+    applications: ['t-shirts', 'uniforms', 'sportswear', 'fashion brands'],
+    alternateNames: ['Garment Labels', 'Clothing Tags', 'Neck Labels', 'Care Labels'],
+  },
+  'cartoon-character-heat-press': {
+    tags: ['cartoon sticker', 'heat press transfer', 'kidswear transfer', 'dtf'],
+    applications: ['t-shirt', 'kidswear', 'uniforms', 'bags'],
+    alternateNames: ['Cartoon Transfer', 'Kids Heat Press Sticker'],
+  },
+  'transfer-label': {
+    tags: ['transfer label', 'garment label', 'neck label', 'care label', 'heat transfer label'],
+    applications: ['t-shirts', 'uniforms', 'sportswear', 'fashion brands'],
+    alternateNames: ['Garment Labels', 'Clothing Tags', 'Neck Labels', 'Care Labels'],
+  },
+  'corporate-t-shirt': {
+    tags: ['corporate tshirt', 'custom tshirt', 'uniform tshirt', 'tshirt printing'],
+    applications: ['corporate events', 'brand merchandise', 'uniforms'],
+    alternateNames: ['Corporate T-shirts', 'Promotional T-shirts', 'Event T-shirts'],
+  },
+  'silicone-heat-transfer-label': {
+    tags: ['silicone label', '3d label', 'raised label', 'rubber label'],
+    applications: ['sportswear', 'luxury fashion', 'premium branding'],
+    alternateNames: ['3D Labels', 'Raised Labels', 'Rubber Labels'],
+  },
+  'polycarbonate-sticker': {
+    tags: ['polycarbonate sticker', 'dome sticker', 'waterproof sticker', 'industrial sticker'],
+    applications: ['metal', 'plastic', 'appliances', 'machinery'],
+    alternateNames: ['Dome Sticker', 'Panel Sticker', 'Waterproof Sticker'],
+  },
+  'clothing-labels': {
+    tags: ['clothing label', 'garment label', 'clothing tag', 'care label', 'brand label'],
+    applications: ['t-shirts', 'uniforms', 'sportswear', 'fashion brands'],
+    alternateNames: ['Garment Labels', 'Clothing Tags', 'Neck Labels', 'Care Labels'],
+  },
+  'customized-t-shirt': {
+    tags: ['custom tshirt', 'customized tshirt', 'tshirt printing', 'personalized tshirt'],
+    applications: ['corporate events', 'brand merchandise', 'gifting', 'celebrations'],
+    alternateNames: ['Corporate T-shirts', 'Promotional T-shirts', 'Event T-shirts'],
+  },
+  'promotional-t-shirt': {
+    tags: ['promotional tshirt', 'event tshirt', 'campaign tshirt', 'tshirt printing'],
+    applications: ['corporate events', 'brand merchandise', 'elections', 'marketing campaigns'],
+    alternateNames: ['Corporate T-shirts', 'Promotional T-shirts', 'Event T-shirts'],
+  },
+}
+
+// Per-product extra keywords (merged on top of the category defaults)
+const PRODUCT_SEO_OVERRIDES = {
+  'uv-dtf-bottle-wrap-sticker': { extraTags: ['bottle wrap', 'tumbler sticker', 'drinkware sticker'] },
+  'dtf-name-number-print': { extraTags: ['jersey print', 'name number print', 'sports kit'] },
+  'reflective-heat-transfer-sticker': { extraTags: ['reflective sticker', 'safety wear'] },
+  'glitter-heat-transfer-sticker': { extraTags: ['glitter sticker'] },
+  '3d-puff-t-shirt-sticker': { extraTags: ['3d puff', 'puff print'] },
+  'election-campaign-t-shirt': { extraTags: ['election tshirt', 'campaign tshirt'] },
+}
+
+const rawProducts = [
   // UV DTF Sticker (4)
   {
     name: 'Multicolor UV DTF Sticker',
@@ -435,6 +529,18 @@ export const products = [
     order: 2,
   },
 ]
+
+// Merge category-level SEO data + per-product overrides into each product
+export const products = rawProducts.map((p) => {
+  const seo = CATEGORY_SEO[p.category] || { tags: [], applications: [], alternateNames: [] }
+  const override = PRODUCT_SEO_OVERRIDES[p.slug] || {}
+  return {
+    ...p,
+    tags: [...new Set([...seo.tags, ...(override.extraTags || [])])],
+    applications: [...new Set([...seo.applications, ...(override.extraApplications || [])])],
+    alternateNames: [...new Set([...seo.alternateNames, ...(override.extraAlternateNames || [])])],
+  }
+})
 
 export async function seedDatabase() {
   await Category.deleteMany({})

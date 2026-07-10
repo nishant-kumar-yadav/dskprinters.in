@@ -16,6 +16,12 @@ const categorySchema = new mongoose.Schema(
     order: { type: Number, default: 0 },
     description: { type: String, default: '' },
     startingPrice: { type: String, default: '' },
+    showInHero: { type: Boolean, default: false },
+    // Category-level templates: auto-fill when creating products in this category
+    defaultSpecs: { type: Map, of: String, default: {} },
+    defaultTags: { type: [String], default: [] },
+    defaultApplications: { type: [String], default: [] },
+    defaultAlternateNames: { type: [String], default: [] },
   },
   { timestamps: true }
 )

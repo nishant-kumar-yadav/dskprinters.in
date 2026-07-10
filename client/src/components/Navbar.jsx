@@ -80,7 +80,7 @@ export default function Navbar() {
             <Phone size={16} aria-hidden="true" />
             {COMPANY.phone}
           </a>
-          <button className="btn btn-outline navbar-search-btn" aria-label="Search Products" style={{ display: 'inline-flex', padding: '10px' }} onClick={() => setSearchOpen(true)}>
+          <button className="navbar-search-btn" aria-label="Search Products" onClick={() => setSearchOpen(true)}>
             <Search size={18} />
           </button>
           <button

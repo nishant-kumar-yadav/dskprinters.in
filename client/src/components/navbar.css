@@ -140,6 +140,39 @@
   padding: 10px 20px;
 }
 
+.navbar-search-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.navbar-search-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--text) !important;
+  color: var(--text) !important;
+}
+
+.navbar-search-btn:hover {
+  background: rgba(29, 78, 216, 0.04);
+  border-color: var(--blue);
+}
+
+.navbar-search-btn:hover svg {
+  stroke: var(--blue) !important;
+  color: var(--blue) !important;
+}
+
 .navbar-burger {
   display: inline-flex;
   align-items: center;

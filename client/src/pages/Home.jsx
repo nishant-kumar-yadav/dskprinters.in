@@ -101,37 +101,48 @@ export default function Home() {
   const featured = (products || []).filter((p) => p.featured).slice(0, 8)
   const topCategories = (categories || []).slice(0, 8)
 
+  const heroProducts = (products || []).filter((p) => p.showInHero).map((p) => ({
+    title: p.name,
+    price: `₹${p.price} / piece onwards`,
+    desc: p.desc || 'Premium quality print products for your brand.',
+    badge: 'Featured Product',
+    image: p.image || '/placeholder.jpg',
+    slug: p.slug,
+    isProduct: true
+  }))
+
+  const heroCategories = (categories || []).filter((c) => c.showInHero).map((c) => ({
+    title: c.name,
+    price: c.startingPrice || '₹10 / piece onwards',
+    desc: c.description || `Explore our premium ${c.name} collection.`,
+    badge: 'Top Category',
+    image: c.image || '/placeholder.jpg',
+    slug: c.slug,
+    isProduct: false
+  }))
+
+  const combinedHero = [...heroProducts, ...heroCategories]
+  const activeHeroSlides = combinedHero.length > 0 ? combinedHero : heroSlides
+
   // Carousel Autoplay
-  const timerRef = useRef(null)
-
-  const resetTimer = () => {
-    if (timerRef.current) clearInterval(timerRef.current)
-    timerRef.current = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % heroSlides.length)
-    }, 4500)
-  }
-
   useEffect(() => {
-    resetTimer()
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current)
-    }
-  }, [])
+    const timer = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % activeHeroSlides.length)
+    }, 4500)
+    return () => clearInterval(timer)
+  }, [activeSlide, activeHeroSlides.length])
 
   const nextSlide = () => {
-    setActiveSlide((prev) => (prev + 1) % heroSlides.length)
-    resetTimer()
+    setActiveSlide((prev) => (prev + 1) % activeHeroSlides.length)
   }
   const prevSlide = () => {
-    setActiveSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)
-    resetTimer()
+    setActiveSlide((prev) => (prev - 1 + activeHeroSlides.length) % activeHeroSlides.length)
   }
   const goToSlide = (index) => {
     setActiveSlide(index)
-    resetTimer()
   }
 
-  const currentSlide = heroSlides[activeSlide]
+  const currentSlide = activeHeroSlides[activeSlide] || activeHeroSlides[0]
 
   return (
     <div className="page" ref={ref}>
@@ -145,7 +156,7 @@ export default function Home() {
         <div className="container hero-inner">
           <div className="hero-visual">
             <div className="hero-carousel-container">
-              <Link to={`/category/${currentSlide.slug}`} className="hero-carousel-link">
+              <Link to={currentSlide.isProduct ? `/product/${currentSlide.slug}` : `/category/${currentSlide.slug}`} className="hero-carousel-link">
                 <img
                   key={activeSlide}
                   src={currentSlide.image}
@@ -163,7 +174,7 @@ export default function Home() {
                 <ChevronRight size={20} />
               </button>
               <div className="carousel-dots">
-                {heroSlides.map((_, index) => (
+                {activeHeroSlides.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => goToSlide(index)}
@@ -189,10 +200,15 @@ export default function Home() {
               {currentSlide.desc}
             </p>
             <div className="hero-actions">
-              <button className="btn btn-primary" onClick={() => openQuote({ source: `hero_carousel_${currentSlide.slug}` })}>
+              <button className="btn btn-primary" onClick={() => openQuote({ 
+                product: currentSlide.title, 
+                productLink: currentSlide.isProduct ? `/product/${currentSlide.slug}` : `/category/${currentSlide.slug}`,
+                productImage: currentSlide.image,
+                source: 'hero_carousel' 
+              })}>
                 Get Best Quote <ArrowRight size={16} aria-hidden="true" />
               </button>
-              <Link to={`/category/${currentSlide.slug}`} className="btn btn-outline">
+              <Link to={currentSlide.isProduct ? `/product/${currentSlide.slug}` : `/category/${currentSlide.slug}`} className="btn btn-outline">
                 View Details
               </Link>
             </div>

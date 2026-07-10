@@ -27,7 +27,12 @@ export default function ProductCard({ product }) {
         <div className="product-card-actions">
           <button
             className="btn btn-primary"
-            onClick={() => openQuote({ product: product.name, source: 'product_card' })}
+            onClick={() => openQuote({ 
+              product: product.name, 
+              productLink: `/product/${product.slug}`,
+              productImage: product.image,
+              source: 'product_card' 
+            })}
           >
             Get Quote
           </button>

@@ -7,6 +7,17 @@ const SOURCE_LABELS = {
   quote_modal: 'Quote Modal',
   contact_form: 'Contact Form',
   navbar_cta: 'Navbar CTA',
+  product_detail: 'Product Page',
+  product_card: 'Product Card',
+  bulk_pricing: 'Bulk Pricing',
+  mobile_sticky_bar: 'Mobile Bar',
+  hero_carousel: 'Hero Banner',
+  home_cta_band: 'Home CTA',
+  products_cta_band: 'Products CTA',
+  cta_band: 'CTA Band',
+  bottom_nav: 'Bottom Nav',
+  search_page_cta: 'Search CTA',
+  seo_landing: 'SEO Page',
 }
 
 export default function LeadsPanel({ onAuthError }) {
@@ -16,6 +27,7 @@ export default function LeadsPanel({ onAuthError }) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [notesDraft, setNotesDraft] = useState({})
+  const [searchQuery, setSearchQuery] = useState('')
 
   const load = useCallback(() => {
     setLoading(true)
@@ -108,6 +120,18 @@ export default function LeadsPanel({ onAuthError }) {
         </select>
         <span className="cell-muted">{data.total} total</span>
         <div className="spacer" />
+        <div className="search-wrap" style={{ width: '250px', maxWidth: '100%' }}>
+          <svg className="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input 
+            type="text" 
+            className="notes-input" 
+            placeholder="Search by name or phone..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
         <button className="btn btn-outline btn-sm" onClick={handleExport}>
           Export CSV
         </button>
@@ -134,17 +158,40 @@ export default function LeadsPanel({ onAuthError }) {
               </tr>
             </thead>
             <tbody>
-              {data.leads.map((lead) => (
+              {data.leads
+                .filter(l => l.name.toLowerCase().includes(searchQuery.toLowerCase()) || l.phone.includes(searchQuery))
+                .map((lead) => (
                 <tr key={lead._id}>
-                  <td>
+                  <td data-label="Contact">
                     <strong>{lead.name}</strong>
                     <div className="cell-muted">{lead.phone}</div>
                     {lead.email && <div className="cell-muted">{lead.email}</div>}
                   </td>
-                  <td>
-                    {lead.product && <div>{lead.product}</div>}
+                  <td data-label="Request">
+                    {lead.product && (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '700', color: 'var(--blue)', marginBottom: '4px' }}>
+                        {lead.productImage && (
+                          <img 
+                            src={lead.productImage} 
+                            alt="" 
+                            style={{ width: '24px', height: '24px', borderRadius: '4px', objectFit: 'cover' }} 
+                          />
+                        )}
+                        <a 
+                          href={lead.productLink || `/search?q=${encodeURIComponent(lead.product)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ color: 'inherit', textDecoration: 'underline' }}
+                          title={lead.productLink ? "View product page" : "Search for this product on the site"}
+                        >
+                          {lead.product}
+                        </a>
+                      </div>
+                    )}
                     {lead.quantity && (
-                      <div className="cell-muted">Qty: {lead.quantity}</div>
+                      <div className="cell-muted" style={{ fontSize: '0.85em', marginBottom: '4px' }}>
+                        Qty: <strong>{lead.quantity}</strong>
+                      </div>
                     )}
                     {lead.message && (
                       <div className="cell-muted" title={lead.message}>
@@ -154,10 +201,10 @@ export default function LeadsPanel({ onAuthError }) {
                       </div>
                     )}
                   </td>
-                  <td className="cell-muted">
+                  <td data-label="Source" className="cell-muted">
                     {SOURCE_LABELS[lead.source] || lead.source}
                   </td>
-                  <td>
+                  <td data-label="Status">
                     <span className={`pill pill-${lead.status}`}>{lead.status}</span>
                     <div style={{ marginTop: 6 }}>
                       <label className="sr-only" htmlFor={`status-${lead._id}`}>
@@ -176,7 +223,7 @@ export default function LeadsPanel({ onAuthError }) {
                       </select>
                     </div>
                   </td>
-                  <td>
+                  <td data-label="Notes">
                     <label className="sr-only" htmlFor={`notes-${lead._id}`}>
                       Notes
                     </label>
@@ -191,14 +238,14 @@ export default function LeadsPanel({ onAuthError }) {
                       onBlur={() => handleNotesBlur(lead._id)}
                     />
                   </td>
-                  <td className="cell-muted">
+                  <td data-label="Date" className="cell-muted">
                     {new Date(lead.createdAt).toLocaleDateString('en-IN', {
                       day: 'numeric',
                       month: 'short',
                       year: 'numeric',
                     })}
                   </td>
-                  <td>
+                  <td data-label="Actions">
                     <button
                       className="btn btn-danger btn-sm"
                       onClick={() => handleDelete(lead._id)}

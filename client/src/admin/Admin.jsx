@@ -93,9 +93,12 @@ export default function Admin() {
 
   return (
     <div className="admin-root admin-shell">
-      <header className="admin-topbar">
-        <div className="brand">
-          <span>DSK</span> Admin
+      <aside className="admin-sidebar">
+        <div className="brand" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div><span>DSK</span> Admin</div>
+          <button className="btn btn-outline mobile-logout" onClick={handleLogout} style={{ padding: '4px 10px', fontSize: '0.8rem' }}>
+            Logout
+          </button>
         </div>
         <nav className="admin-nav" aria-label="Admin sections">
           {TABS.map((t) => (
@@ -109,10 +112,12 @@ export default function Admin() {
             </button>
           ))}
         </nav>
-        <button className="btn btn-outline btn-sm" onClick={handleLogout}>
-          Logout
-        </button>
-      </header>
+        <div className="logout-wrap">
+          <button className="btn btn-outline btn-sm" onClick={handleLogout} style={{ width: '100%' }}>
+            Logout
+          </button>
+        </div>
+      </aside>
       <main className="admin-main">
         {tab === 'dashboard' && <StatsPanel onAuthError={handleAuthError} />}
         {tab === 'leads' && <LeadsPanel onAuthError={handleAuthError} />}

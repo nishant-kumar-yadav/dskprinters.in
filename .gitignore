@@ -21,3 +21,7 @@ dist/
 .idea/
 .vscode/
 .agents/skills/
+dsk-printers-clone.zip
+v0-temp/
+test.js
+server/test-email.js

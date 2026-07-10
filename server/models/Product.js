@@ -12,6 +12,7 @@ const productSchema = new mongoose.Schema(
     specs: { type: Map, of: String, default: {} },
     inStock: { type: Boolean, default: true },
     featured: { type: Boolean, default: false },
+    showInHero: { type: Boolean, default: false },
     order: { type: Number, default: 0 },
     tags: { type: [String], default: [] },
     applications: { type: [String], default: [] },
