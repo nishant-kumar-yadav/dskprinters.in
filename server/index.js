@@ -17,13 +17,15 @@ app.use(helmet())
 app.use(
   cors({
     origin: [
+      process.env.CLIENT_URL,
       'https://dskprinters.in',
       'https://www.dskprinters.in',
       /\.vercel\.app$/,
+      /\.github\.io$/,
       /\.vusercontent\.net$/,
       'http://localhost:5173',
       'http://localhost:3000',
-    ],
+    ].filter(Boolean),
     credentials: true,
   })
 )
