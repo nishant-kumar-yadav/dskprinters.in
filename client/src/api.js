@@ -115,7 +115,7 @@ export const COMPANY = {
   whatsapp: 'https://wa.me/919958735477',
   email: 'support@dskprinters.in',
   gst: '07DOZPK8646J1ZV',
-  location: 'New Delhi, Delhi, India',
+  location: 'DSK Printers, 2nd floor, B 56, Block B, Naraina Industrial Area Phase 2, Naraina, New Delhi, Delhi, 110028',
   established: 2015,
   turnover: '₹1.5 - 5 Crore',
   employees: '20-50',
