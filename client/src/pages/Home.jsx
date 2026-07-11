@@ -55,7 +55,7 @@ const heroSlides = [
     price: "₹2.50 / sq. inch onwards",
     desc: "Permanent scratch-proof stickers for metal, glass, plastic, wood and leather branding.",
     badge: "Most Popular for Merch",
-    image: "/images/cat-uv-dtf.png",
+    image: "/images/cat-uv-dtf.webp",
     slug: "uv-dtf-sticker"
   },
   {
@@ -63,7 +63,7 @@ const heroSlides = [
     price: "₹1.20 / sq. inch onwards",
     desc: "High stretch garment transfer stickers for fabrics, t-shirts, caps, bags and uniforms.",
     badge: "Garment Decoration Standard",
-    image: "/images/cat-dtf.png",
+    image: "/images/cat-dtf.webp",
     slug: "dtf-sticker"
   },
   {
@@ -71,7 +71,7 @@ const heroSlides = [
     price: "₹150 / piece onwards",
     desc: "Premium quality corporate t-shirts, promotional t-shirts and uniforms with your branding.",
     badge: "Corporate & Event Merch",
-    image: "/images/cat-custom-tshirt.png",
+    image: "/images/cat-custom-tshirt.webp",
     slug: "customized-t-shirt"
   },
   {
@@ -79,7 +79,7 @@ const heroSlides = [
     price: "₹3.50 / piece onwards",
     desc: "Tactile premium 3D labels for luxury sportswear, shirts, and fashion brand tagging.",
     badge: "Premium Sportswear Detail",
-    image: "/images/cat-silicone.png",
+    image: "/images/cat-silicone.webp",
     slug: "silicone-heat-transfer-label"
   }
 ]
@@ -106,7 +106,7 @@ export default function Home() {
     price: `₹${p.price} / piece onwards`,
     desc: p.desc || 'Premium quality print products for your brand.',
     badge: 'Featured Product',
-    image: p.image || '/placeholder.jpg',
+    image: p.image || '/placeholder.webp',
     slug: p.slug,
     isProduct: true
   }))
@@ -116,7 +116,7 @@ export default function Home() {
     price: c.startingPrice || '₹10 / piece onwards',
     desc: c.description || `Explore our premium ${c.name} collection.`,
     badge: 'Top Category',
-    image: c.image || '/placeholder.jpg',
+    image: c.image || '/placeholder.webp',
     slug: c.slug,
     isProduct: false
   }))
@@ -149,6 +149,9 @@ export default function Home() {
       <Helmet>
         <title>DSK Printers | DTF & UV DTF Sticker Manufacturer in New Delhi</title>
         <meta name="description" content="Buy DTF stickers, UV DTF stickers, heat transfer labels and custom printed t-shirts from DSK Printers, a trusted manufacturer in New Delhi. Bulk pricing, pan-India delivery." />
+        {activeHeroSlides[0]?.image && (
+          <link rel="preload" as="image" href={activeHeroSlides[0].image} type="image/webp" />
+        )}
       </Helmet>
 
       {/* Hero */}
@@ -162,8 +165,12 @@ export default function Home() {
                   src={currentSlide.image}
                   alt={currentSlide.title}
                   className="hero-carousel-image fade-in"
+                  width={800}
+                  height={800}
+                  fetchpriority={activeSlide === 0 ? "high" : "auto"}
+                  loading={activeSlide === 0 ? "eager" : "lazy"}
                   onError={(e) => {
-                    e.currentTarget.src = '/placeholder.jpg'
+                    e.currentTarget.src = '/placeholder.webp'
                   }}
                 />
               </Link>
@@ -241,11 +248,11 @@ export default function Home() {
               : topCategories.map((c) => (
                   <Link key={c.slug} to={`/category/${c.slug}`} className="cat-card card">
                     <img
-                      src={c.image || '/placeholder.jpg'}
+                      src={c.image || '/placeholder.webp'}
                       alt={c.name}
                       loading="lazy"
                       onError={(e) => {
-                        e.currentTarget.src = '/placeholder.jpg'
+                        e.currentTarget.src = '/placeholder.webp'
                       }}
                     />
                     <div className="cat-card-body">

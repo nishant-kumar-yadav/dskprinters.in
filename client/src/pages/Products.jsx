@@ -39,7 +39,7 @@ export default function Products() {
               : (categories || []).map((cat) => (
                   <Link key={cat.slug} to={`/category/${cat.slug}`} className="category-directory-card card">
                     <div className="cat-dir-image">
-                      <img src={cat.image || '/placeholder.jpg'} alt={cat.name} loading="lazy" />
+                      <img src={cat.image || '/placeholder.webp'} alt={cat.name} loading="lazy" width={400} height={300} />
                     </div>
                     <div className="cat-dir-body">
                       <h2>{cat.name}</h2>

@@ -1,7 +1,7 @@
 import Category from './models/Category.js'
 import Product from './models/Product.js'
 
-const IMG = (name) => `/images/${name}.png`
+const IMG = (name) => `/images/${name}.webp`
 
 export const categories = [
   { name: 'UV DTF Sticker', slug: 'uv-dtf-sticker', image: IMG('cat-uv-dtf'), order: 1, defaultTags: ['uv dtf', 'uv label', 'ink transfer', 'waterproof sticker', 'vinyl sticker', 'sticker for mug', 'sticker for bottle'], defaultApplications: ['glass', 'wood', 'metal', 'plastic', 'mug', 'bottle', 'phone cover', 'laptop'], defaultAlternateNames: ['UV DTF Label', 'INK Transfer Sticker', 'Vinyl Sticker', 'Waterproof Sticker'] },

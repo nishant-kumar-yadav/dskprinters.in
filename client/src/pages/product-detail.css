@@ -665,8 +665,18 @@
 }
 
 .pd-app-icon {
-  font-size: 1.8rem;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: #eff6ff; /* light blue */
+  border-radius: 50%;
+  margin-bottom: 4px;
+}
+
+.pd-app-lucide {
+  color: var(--blue) !important;
 }
 
 .pd-app-name {
@@ -923,24 +933,24 @@
     flex-shrink: 0;
   }
 
-  .pd-sticky-wa {
+  div.pd-sticky-wa, a.pd-sticky-wa {
     background: #25d366 !important;
     color: #ffffff !important;
     border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
+    padding: 0 !important;
   }
 
-  .pd-sticky-quote {
-    padding: 8px 16px;
-    font-size: 0.82rem;
-    height: 40px;
-    border-radius: 10px;
+  button.pd-sticky-quote {
+    padding: 8px 16px !important;
+    font-size: 0.95rem;
+    height: 48px;
+    border-radius: 999px;
     font-weight: 700;
   }
 

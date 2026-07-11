@@ -13,7 +13,7 @@ export default function Footer() {
       <div className="container footer-grid">
         <div className="footer-brand">
           <Link to="/" className="footer-logo" aria-label="DSK Printers home">
-            <img src="/images/logo.png" alt="DSK Printers logo" width="44" height="44" />
+            <img src="/images/logo.webp" alt="DSK Printers logo" width="44" height="44" />
             <span>
               <strong>DSK Printers</strong>
               <small>Since {COMPANY.established}</small>

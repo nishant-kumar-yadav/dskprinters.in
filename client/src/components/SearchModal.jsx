@@ -319,7 +319,7 @@ export default function SearchModal({ isOpen, onClose }) {
                           aria-selected={flatIdx === activeIndex}
                         >
                           <div className="result-img">
-                            <img src={product.image || '/placeholder.jpg'} alt={product.name} loading="lazy" />
+                            <img src={product.image || '/placeholder.webp'} alt={product.name} loading="lazy" />
                           </div>
                           <div className="result-info">
                             <h4><HighlightMatch text={product.name} query={debouncedQuery} /></h4>

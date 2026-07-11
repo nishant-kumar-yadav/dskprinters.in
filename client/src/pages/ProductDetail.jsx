@@ -5,7 +5,9 @@ import { Helmet } from 'react-helmet-async'
 import {
   ChevronRight, MessageCircle, Phone, Star, Truck, Shield, FileText,
   Share2, Copy, Check, Download, ZoomIn, Package, Sparkles,
-  Droplets, Palette, Ruler, ShoppingBag
+  Droplets, Palette, Ruler, ShoppingBag, Shirt, Coffee, CupSoda,
+  Smartphone, Briefcase, Gift, Layers, Settings, LayoutGrid, TreePine,
+  HardHat, Building2, Scissors, Laptop, Car, Monitor, Lightbulb
 } from 'lucide-react'
 import { fetchProduct, fetchProducts, COMPANY } from '../api.js'
 import { useQuoteModal } from '../components/QuoteModal.jsx'
@@ -16,30 +18,36 @@ import './product-detail.css'
 
 /* ── Icon map for application tags ── */
 const APP_ICONS = {
-  't-shirt': '👕', 'tshirt': '👕', 'shirt': '👕', 'apparel': '👕',
-  'mug': '☕', 'cup': '☕',
-  'tumbler': '🥤', 'bottle': '🥤',
-  'cap': '🧢', 'hat': '🧢',
-  'bag': '👜', 'tote': '👜',
-  'phone': '📱', 'case': '📱',
-  'glass': '🪟', 'window': '🪟',
-  'wood': '🪵', 'wooden': '🪵',
-  'metal': '⚙️',
-  'ceramic': '🏺',
-  'fabric': '🧵', 'textile': '🧵',
-  'leather': '👝',
-  'paper': '📄', 'card': '📄',
-  'gift': '🎁',
-  'helmet': '⛑️',
-  'corporate': '🏢',
+  't-shirt': Shirt, 'tshirt': Shirt, 'shirt': Shirt, 'apparel': Shirt,
+  'mug': Coffee, 'cup': Coffee, 'ceramic': Coffee,
+  'tumbler': CupSoda, 'bottle': CupSoda,
+  'cap': HardHat, 'hat': HardHat, 'helmet': HardHat,
+  'bag': ShoppingBag, 'tote': ShoppingBag,
+  'phone': Smartphone, 'case': Smartphone, 'mobile': Smartphone,
+  'glass': LayoutGrid, 'window': LayoutGrid,
+  'wood': TreePine, 'wooden': TreePine,
+  'metal': Settings, 'steel': Settings,
+  'fabric': Scissors, 'textile': Scissors,
+  'leather': Briefcase,
+  'paper': FileText, 'card': FileText,
+  'gift': Gift,
+  'corporate': Building2,
+  'laptop': Laptop,
+  'car': Car, 'auto': Car,
+  'monitor': Monitor,
+  'plastic': Layers,
 }
 
 function getAppIcon(app) {
   const lower = app.toLowerCase()
-  for (const [key, icon] of Object.entries(APP_ICONS)) {
-    if (lower.includes(key)) return icon
+  let IconComponent = Sparkles // default
+  for (const [key, Icon] of Object.entries(APP_ICONS)) {
+    if (lower.includes(key)) {
+      IconComponent = Icon
+      break
+    }
   }
-  return '✨'
+  return <IconComponent size={32} strokeWidth={1.5} color="var(--blue)" className="pd-app-lucide" />
 }
 
 /* ── Star rating component ── */
@@ -87,10 +95,10 @@ function ImageViewer({ src, alt }) {
       onMouseMove={handleMouseMove}
     >
       <img
-        src={src || '/placeholder.jpg'}
+        src={src || '/placeholder.webp'}
         alt={alt}
         style={zoomed ? { transformOrigin: `${mousePos.x}% ${mousePos.y}%` } : {}}
-        onError={(e) => { e.currentTarget.src = '/placeholder.jpg' }}
+        onError={(e) => { e.currentTarget.src = '/placeholder.webp' }}
       />
       <div className="pd-zoom-hint">
         <ZoomIn size={16} />
@@ -156,7 +164,7 @@ export default function ProductDetail() {
       return product.images
     }
     // Otherwise, just the single image — no forced extras
-    return [product.image || '/placeholder.jpg']
+    return [product.image || '/placeholder.webp']
   }, [product])
 
   // Direct title + JSON-LD injection (Helmet backup)
@@ -625,7 +633,7 @@ export default function ProductDetail() {
         <div className="pd-sticky-bar">
           <div className="pd-sticky-content">
             <div className="pd-sticky-img">
-              <img src={galleryImages[activeImageIndex] || '/placeholder.jpg'} alt="" />
+              <img src={galleryImages[activeImageIndex] || '/placeholder.webp'} alt="" />
             </div>
             <div className="pd-sticky-info">
               <strong>{product.name}</strong>

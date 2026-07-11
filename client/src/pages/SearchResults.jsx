@@ -276,7 +276,7 @@ export default function SearchResults() {
                     style={{ animationDelay: `${Math.min(idx, 12) * 50}ms` }}
                   >
                     <div className="sr-card-img">
-                      <img src={product.image || '/placeholder.jpg'} alt={product.name} loading="lazy" />
+                      <img src={product.image || '/placeholder.webp'} alt={product.name} loading="lazy" />
                     </div>
                     <div className="sr-card-body">
                       <h3><HighlightMatch text={product.name} query={urlQuery} /></h3>

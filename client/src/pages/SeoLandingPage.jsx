@@ -74,7 +74,7 @@ export default function SeoLandingPage() {
         </script>
       </Helmet>
 
-      <section className="page-hero">
+      <section className="page-hero" style={{ paddingBottom: '32px' }}>
         <div className="container">
           <nav className="breadcrumb" aria-label="Breadcrumb">
             <Link to="/">Home</Link>
@@ -83,13 +83,9 @@ export default function SeoLandingPage() {
             <ChevronRight size={13} aria-hidden="true" />
             <span>{h1}</span>
           </nav>
-          <h1>{h1}</h1>
-          <p>
-            DSK Printers is a GST-registered {parsed.businessType ? parsed.businessType.name.toLowerCase() : 'manufacturer and supplier'} of{' '}
-            {parsed.productName ? parsed.productName.toLowerCase() + 's' : 'printing products'} based in New Delhi, serving {locationName} with bulk
-            pricing and pan-India delivery since {COMPANY.established}.
-          </p>
-          <div className="hero-cta-row" style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginTop: '1rem' }}>
+          <h1 style={{ marginBottom: '1rem' }}>{h1}</h1>
+          
+          <div className="hero-cta-row" style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
             <button type="button" className="btn btn-primary" onClick={() => openQuote && openQuote()}>
               Get Best Quote
             </button>
@@ -100,42 +96,22 @@ export default function SeoLandingPage() {
               <Phone size={16} aria-hidden="true" /> Call Now
             </a>
           </div>
-
-          {parsed.location && (
-            <div className="seo-local-banner" style={{
-              display: 'flex', alignItems: 'flex-start', gap: '12px', marginTop: '24px', 
-              padding: '16px', background: '#eff6ff', border: '1px solid #bfdbfe', 
-              borderRadius: '12px', color: '#1e3a8a', textAlign: 'left'
-            }}>
-              <MapPin size={24} style={{ flexShrink: 0, marginTop: '2px', color: '#3b82f6' }} />
-              <div>
-                <strong style={{ display: 'block', fontSize: '0.95rem', marginBottom: '4px' }}>Fast Shipping to {parsed.location.name}</strong>
-                <span style={{ fontSize: '0.85rem' }}>We provide priority dispatch for wholesale printing orders to {parsed.location.name} via trusted logistics partners. Bulk pricing applied.</span>
-              </div>
-            </div>
-          )}
         </div>
       </section>
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <div className="seo-trust-row" style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', padding: '1rem 0' }}>
-            <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-              <BadgeCheck size={18} aria-hidden="true" /> GST: {COMPANY.gst}
-            </span>
-            <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-              <Truck size={18} aria-hidden="true" /> Pan-India Delivery
-            </span>
-            <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-              <IndianRupee size={18} aria-hidden="true" /> Wholesale Bulk Pricing
-            </span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
+            <h2>
+              {matchedProducts.length > 0 ? `Our ${h1} Range` : 'Popular Products'}
+            </h2>
+            <div style={{ display: 'flex', gap: '1rem', color: 'var(--muted)', fontSize: '0.85rem' }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}><BadgeCheck size={16} /> GST Registered</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}><Truck size={16} /> Pan-India</span>
+            </div>
           </div>
 
-          <h2 style={{ marginTop: '1rem' }}>
-            {matchedProducts.length > 0 ? `Our ${h1} Range` : 'Popular Products'}
-          </h2>
-
-          <div className="grid grid-3" style={{ marginTop: '1rem' }}>
+          <div className="grid grid-3">
             {isLoading
               ? Array.from({ length: 3 }).map((_, i) => <div key={i} className="skeleton cat-skeleton" />)
               : displayProducts.map((p) => <ProductCard key={p.slug} product={p} />)}
@@ -150,19 +126,35 @@ export default function SeoLandingPage() {
               </p>
             </div>
           )}
-        </div>
-      </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <h2>{'Why Choose DSK Printers?'}</h2>
-          <p style={{ maxWidth: '46rem', lineHeight: 1.6 }}>
-            Established in {COMPANY.established}, DSK Printers has grown into one of {locationName === 'India' ? "India's" : `${locationName}'s`} trusted
-            names for {parsed.productName ? parsed.productName.toLowerCase() + 's' : 'DTF and UV DTF printing products'}.
-            {parsed.application ? ` Our products are specially suited for ${parsed.application.toLowerCase()} applications with durable, wash-resistant and vibrant results.` : ''}{' '}
-            With a team of {COMPANY.employees} specialists, an annual turnover of {COMPANY.turnover} and a {COMPANY.responseRate} response rate, we handle
-            everything from single-design sample orders to high-volume bulk production with fast turnaround and reliable pan-India logistics.
-          </p>
+          <div className="seo-content-bottom" style={{ 
+            marginTop: '3rem', padding: '24px', background: 'var(--surface)', 
+            borderRadius: '12px', border: '1px solid var(--border)' 
+          }}>
+            <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>About Our Services in {locationName}</h3>
+            <p style={{ lineHeight: 1.6, color: 'var(--text)', marginBottom: '1.5rem' }}>
+              DSK Printers is a GST-registered {parsed.businessType ? parsed.businessType.name.toLowerCase() : 'manufacturer and supplier'} of{' '}
+              {parsed.productName ? parsed.productName.toLowerCase() + 's' : 'printing products'} based in New Delhi, serving {locationName} with bulk
+              pricing and pan-India delivery since {COMPANY.established}.
+              {parsed.application ? ` Our products are specially suited for ${parsed.application.toLowerCase()} applications with durable, wash-resistant and vibrant results.` : ''}{' '}
+              With a team of {COMPANY.employees} specialists, an annual turnover of {COMPANY.turnover} and a {COMPANY.responseRate} response rate, we handle
+              everything from single-design sample orders to high-volume bulk production with fast turnaround.
+            </p>
+
+            {parsed.location && (
+              <div className="seo-local-banner" style={{
+                display: 'flex', alignItems: 'flex-start', gap: '12px', 
+                padding: '16px', background: '#eff6ff', border: '1px solid #bfdbfe', 
+                borderRadius: '8px', color: '#1e3a8a', textAlign: 'left'
+              }}>
+                <MapPin size={24} style={{ flexShrink: 0, marginTop: '2px', color: '#3b82f6' }} />
+                <div>
+                  <strong style={{ display: 'block', fontSize: '0.95rem', marginBottom: '4px' }}>Fast Shipping to {parsed.location.name}</strong>
+                  <span style={{ fontSize: '0.85rem' }}>We provide priority dispatch for wholesale printing orders to {parsed.location.name} via trusted logistics partners. Bulk pricing applied.</span>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </section>
 

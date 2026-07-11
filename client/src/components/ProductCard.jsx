@@ -10,11 +10,13 @@ export default function ProductCard({ product }) {
     <article className="product-card card">
       <Link to={`/product/${product.slug}`} className="product-card-img">
         <img
-          src={product.image || '/placeholder.jpg'}
+          src={product.image || '/placeholder.webp'}
           alt={product.name}
           loading="lazy"
+          width={400}
+          height={400}
           onError={(e) => {
-            e.currentTarget.src = '/placeholder.jpg'
+            e.currentTarget.src = '/placeholder.webp'
           }}
         />
         {product.featured && <span className="badge badge-red product-card-badge">Popular</span>}

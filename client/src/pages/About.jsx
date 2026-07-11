@@ -78,10 +78,10 @@ export default function About() {
         <div className="container about-grid">
           <div className="about-visual reveal">
             <img
-              src="/images/cat-tshirt-printing.png"
+              src="/images/cat-tshirt-printing.webp"
               alt="DSK Printers production facility in New Delhi"
               onError={(e) => {
-                e.currentTarget.src = '/placeholder.jpg'
+                e.currentTarget.src = '/placeholder.webp'
               }}
             />
           </div>
