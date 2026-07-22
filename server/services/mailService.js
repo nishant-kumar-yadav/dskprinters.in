@@ -14,7 +14,7 @@ export const sendAdminNotification = async (lead) => {
   try {
     const mailOptions = {
       from: '"DSK Printers" <noreply@dskprinters.in>',
-      to: process.env.ADMIN_EMAIL || 'admin@dskprinters.in',
+      to: process.env.ADMIN_EMAIL || 'dskprintingpress@gmail.com',
       subject: `New Quote Request from ${lead.name}`,
       text: `You have received a new quote request.\n\nName: ${lead.name}\nPhone: ${lead.phone}\nProduct: ${lead.product || 'N/A'}\nQuantity: ${lead.quantity || 'N/A'}\nMessage: ${lead.message || 'N/A'}`,
     };
