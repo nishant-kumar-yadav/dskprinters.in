@@ -10,6 +10,8 @@ import './navbar.css'
 const links = [
   { to: '/', label: 'Home' },
   { to: '/products', label: 'Products', mega: true },
+  { to: '/gallery', label: 'Gallery' },
+  { to: '/blog', label: 'Blog' },
   { to: '/about', label: 'About' },
   { to: '/reviews', label: 'Reviews' },
   { to: '/contact', label: 'Contact' },
@@ -33,7 +35,7 @@ export default function Navbar() {
     <header className="navbar glass">
       <div className="container navbar-inner">
         <Link to="/" className="navbar-brand" aria-label="DSK Printers home">
-          <img src="/images/logo.webp" alt="DSK Printers logo" width="42" height="42" />
+          <img src="/images/logo.png" alt="DSK Printers logo" width="42" height="42" />
           <span>
             <strong>DSK Printers</strong>
             <small>New Delhi, India</small>

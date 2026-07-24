@@ -4,6 +4,9 @@ import StatsPanel from './StatsPanel.jsx'
 import LeadsPanel from './LeadsPanel.jsx'
 import ProductsPanel from './ProductsPanel.jsx'
 import CategoriesPanel from './CategoriesPanel.jsx'
+import GalleryPanel from './GalleryPanel.jsx'
+import BlogPanel from './BlogPanel.jsx'
+import InstagramPanel from './InstagramPanel.jsx'
 import './admin.css'
 
 const TABS = [
@@ -11,6 +14,9 @@ const TABS = [
   { id: 'leads', label: 'Leads' },
   { id: 'products', label: 'Products' },
   { id: 'categories', label: 'Categories' },
+  { id: 'gallery', label: 'Gallery' },
+  { id: 'blog', label: '📝 Blog' },
+  { id: 'instagram', label: '📸 Instagram' },
 ]
 
 function Login({ onSuccess }) {
@@ -123,6 +129,9 @@ export default function Admin() {
         {tab === 'leads' && <LeadsPanel onAuthError={handleAuthError} />}
         {tab === 'products' && <ProductsPanel onAuthError={handleAuthError} />}
         {tab === 'categories' && <CategoriesPanel onAuthError={handleAuthError} />}
+        {tab === 'gallery' && <GalleryPanel onAuthError={handleAuthError} />}
+        {tab === 'blog' && <BlogPanel onAuthError={handleAuthError} />}
+        {tab === 'instagram' && <InstagramPanel onAuthError={handleAuthError} />}
       </main>
     </div>
   )

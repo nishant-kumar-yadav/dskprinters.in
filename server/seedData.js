@@ -1,5 +1,6 @@
 import Category from './models/Category.js'
 import Product from './models/Product.js'
+import BlogPost from './models/BlogPost.js'
 
 const IMG = (name) => `/images/${name}.webp`
 
@@ -545,7 +546,191 @@ export const products = rawProducts.map((p) => {
 export async function seedDatabase() {
   await Category.deleteMany({})
   await Product.deleteMany({})
+  await BlogPost.deleteMany({})
   await Category.insertMany(categories)
   await Product.insertMany(products)
-  return { categories: categories.length, products: products.length }
+
+  // Seed blog posts
+  const blogPosts = [
+    {
+      title: 'What is DTF Printing? A Complete Guide for Businesses',
+      slug: 'what-is-dtf-printing-complete-guide',
+      category: 'dtf',
+      tags: ['DTF', 'printing', 'guide', 'garment', 'business'],
+      published: true,
+      publishedAt: new Date('2026-07-15'),
+      author: 'DSK Printers',
+      excerpt: 'DTF (Direct to Film) printing is a revolutionary garment decoration technique that allows vibrant, full-color prints on virtually any fabric. Learn how it works and why businesses choose DTF.',
+      content: `<h2>What is DTF Printing?</h2>
+<p>DTF stands for <strong>Direct to Film</strong> — a modern printing technique where designs are printed onto a special PET film, coated with a hot-melt adhesive powder, and then heat-pressed onto fabric. The result is a vibrant, durable print that works on virtually any color of fabric.</p>
+
+<h2>How Does DTF Printing Work?</h2>
+<p>The DTF process involves five key steps:</p>
+<ol>
+<li><strong>Design Preparation</strong> — Your artwork is prepared digitally and color-separated for optimal print quality.</li>
+<li><strong>Printing on PET Film</strong> — A specialized DTF printer prints the design (including white ink) onto transparent PET film.</li>
+<li><strong>Powder Application</strong> — Hot-melt adhesive powder is applied to the wet ink and excess is removed.</li>
+<li><strong>Curing</strong> — The film is passed through a curing oven to melt the adhesive powder.</li>
+<li><strong>Heat Transfer</strong> — The cured film is placed on the garment and pressed with a heat press (160°C, 15 seconds).</li>
+</ol>
+
+<h2>Why Choose DTF for Your Business?</h2>
+<blockquote>DTF printing eliminates the need for screen setup, making it ideal for small-batch and bulk orders alike.</blockquote>
+<ul>
+<li><strong>No color limitations</strong> — Full CMYK + White means photographic quality on any fabric color</li>
+<li><strong>Works on all fabrics</strong> — Cotton, polyester, blends, nylon, even leather</li>
+<li><strong>No minimum order</strong> — Economical from 1 piece to 100,000 pieces</li>
+<li><strong>Wash-durable</strong> — Properly applied DTF prints last 50+ washes</li>
+<li><strong>Stretchy and soft</strong> — The print moves with the fabric without cracking</li>
+</ul>
+
+<h2>DTF vs Screen Printing vs DTG</h2>
+<p>While screen printing is cost-effective for very large runs of simple designs, and DTG (Direct to Garment) is excellent for one-offs, <strong>DTF hits the sweet spot</strong> — it offers screen-print durability at DTG flexibility, making it the best choice for most B2B orders.</p>
+
+<h2>Get Started with DTF</h2>
+<p>At DSK Printers, we've been manufacturing DTF transfers since 2015. Whether you need 100 stickers or 100,000, we deliver consistent quality with pan-India shipping. Contact us for a free sample!</p>`,
+    },
+    {
+      title: 'UV DTF vs Regular DTF: Which Sticker is Right for Your Product?',
+      slug: 'uv-dtf-vs-regular-dtf-comparison',
+      category: 'uv-dtf',
+      tags: ['UV DTF', 'DTF', 'comparison', 'stickers', 'labels'],
+      published: true,
+      publishedAt: new Date('2026-07-18'),
+      author: 'DSK Printers',
+      excerpt: 'UV DTF and regular DTF stickers serve different purposes. One is for hard surfaces like mugs and bottles, the other for fabrics. Here\'s a detailed comparison to help you choose.',
+      content: `<h2>Understanding the Difference</h2>
+<p>Both UV DTF and regular DTF are transfer-based printing technologies, but they're designed for completely different surfaces and applications.</p>
+
+<h2>Regular DTF Stickers</h2>
+<p><strong>Best for: Fabrics and textiles</strong></p>
+<ul>
+<li>Requires heat press application (160°C)</li>
+<li>Works on cotton, polyester, and blended fabrics</li>
+<li>Ideal for t-shirts, hoodies, bags, caps, and uniforms</li>
+<li>Stretchy — moves with the fabric</li>
+<li>50+ wash durability</li>
+</ul>
+
+<h2>UV DTF Stickers</h2>
+<p><strong>Best for: Hard and smooth surfaces</strong></p>
+<ul>
+<li>Peel-and-stick application — no heat needed!</li>
+<li>Works on glass, metal, plastic, wood, ceramic, phone covers, and more</li>
+<li>Waterproof and scratch-resistant</li>
+<li>UV-cured inks provide vivid, long-lasting colors</li>
+<li>Great for mugs, bottles, promotional items, and product branding</li>
+</ul>
+
+<h2>Quick Comparison Table</h2>
+<table>
+<tr><th>Feature</th><th>Regular DTF</th><th>UV DTF</th></tr>
+<tr><td>Surface</td><td>Fabrics</td><td>Hard surfaces</td></tr>
+<tr><td>Application</td><td>Heat press</td><td>Peel & stick</td></tr>
+<tr><td>Durability</td><td>50+ washes</td><td>Waterproof, scratch-resistant</td></tr>
+<tr><td>Best for</td><td>T-shirts, uniforms</td><td>Mugs, bottles, product branding</td></tr>
+<tr><td>Minimum order</td><td>From 100 pcs</td><td>From 100 pcs</td></tr>
+</table>
+
+<h2>Which Should You Choose?</h2>
+<p>If you're branding <strong>apparel</strong> — go with regular DTF. If you're branding <strong>products, gifts, or merchandise</strong> on hard surfaces — UV DTF is your answer. Many of our clients use both!</p>
+
+<p>Need help deciding? <strong>WhatsApp us with a photo of your product</strong> and we'll recommend the best sticker type for your needs.</p>`,
+    },
+    {
+      title: 'How to Apply Heat Transfer Labels on Garments: Step-by-Step',
+      slug: 'how-to-apply-heat-transfer-labels',
+      category: 'tutorials',
+      tags: ['heat transfer', 'labels', 'garments', 'tutorial', 'how-to'],
+      published: true,
+      publishedAt: new Date('2026-07-20'),
+      author: 'DSK Printers',
+      excerpt: 'A step-by-step guide to perfectly applying heat transfer labels on t-shirts, uniforms, and other garments. Includes temperature, pressure, and timing tips.',
+      content: `<h2>What You'll Need</h2>
+<ul>
+<li>Heat transfer labels (from DSK Printers)</li>
+<li>Heat press machine (flat bed recommended)</li>
+<li>Teflon sheet or parchment paper</li>
+<li>Clean, pre-pressed garment</li>
+</ul>
+
+<h2>Step-by-Step Application</h2>
+
+<h3>Step 1: Pre-Press the Garment</h3>
+<p>Place your garment on the heat press and press for <strong>3-5 seconds</strong> at 150°C. This removes moisture and wrinkles, ensuring a smooth application surface.</p>
+
+<h3>Step 2: Position the Label</h3>
+<p>Place the heat transfer label in the desired position. For neck labels, center it on the inside back of the collar. Use a ruler or alignment tool for precision.</p>
+
+<h3>Step 3: Cover with Teflon Sheet</h3>
+<p>Place a Teflon sheet or parchment paper over the label. This protects both the label and the garment from direct heat contact.</p>
+
+<h3>Step 4: Press with Correct Settings</h3>
+<ul>
+<li><strong>Temperature:</strong> 150-160°C (depends on label type)</li>
+<li><strong>Pressure:</strong> Medium-firm (about 40 PSI)</li>
+<li><strong>Time:</strong> 8-12 seconds</li>
+</ul>
+
+<h3>Step 5: Peel the Carrier Film</h3>
+<p>After pressing, wait <strong>2-3 seconds</strong> for a warm peel (or let it cool completely for a cold peel, depending on the label type). Gently peel the carrier film at a 45° angle.</p>
+
+<h3>Step 6: Final Press (Optional)</h3>
+<p>For maximum durability, do a final press with the Teflon sheet for 3-5 seconds. This ensures complete adhesion.</p>
+
+<h2>Common Mistakes to Avoid</h2>
+<ul>
+<li><strong>Too hot</strong> — Scorches the label or garment. Stay at 150-160°C.</li>
+<li><strong>Too little pressure</strong> — Label won't adhere properly. You need firm, even pressure.</li>
+<li><strong>Peeling too fast</strong> — Let it cool slightly before peeling.</li>
+<li><strong>Damp garment</strong> — Always pre-press to remove moisture.</li>
+</ul>
+
+<p>Need labels for your brand? DSK Printers manufactures custom heat transfer labels with your logo, care instructions, and sizes. Get a free sample today!</p>`,
+    },
+    {
+      title: '5 Ways Custom Stickers Can Boost Your Brand Visibility',
+      slug: '5-ways-custom-stickers-boost-brand',
+      category: 'general',
+      tags: ['branding', 'custom stickers', 'marketing', 'business tips'],
+      published: true,
+      publishedAt: new Date('2026-07-22'),
+      author: 'DSK Printers',
+      excerpt: 'Custom stickers are one of the most cost-effective marketing tools for businesses. Here are 5 proven ways to use them to increase your brand visibility.',
+      content: `<h2>Why Custom Stickers?</h2>
+<p>In today's competitive market, brand visibility is everything. Custom stickers offer an incredibly <strong>cost-effective</strong> way to get your brand noticed — on products, packaging, vehicles, laptops, and more.</p>
+
+<h2>1. Product Packaging That Stands Out</h2>
+<p>A branded sticker on your product packaging instantly elevates its perceived value. Whether it's a "Thank You" sticker sealing a package or a product information label, stickers make your brand memorable.</p>
+<blockquote>Customers are 7x more likely to remember a brand with distinctive packaging.</blockquote>
+
+<h2>2. Free Marketing on Customer Items</h2>
+<p>Give away quality branded stickers with every order. Customers stick them on laptops, water bottles, phone cases, and notebooks — turning every surface into a mini billboard for your brand. It's free ongoing advertising!</p>
+
+<h2>3. Retail Shelf Differentiation</h2>
+<p>If your products sit on retail shelves, a well-designed sticker can be the difference between being picked up or passed over. Promotional stickers like "New!", "Best Seller", or "Limited Edition" drive impulse purchases.</p>
+
+<h2>4. Event & Trade Show Giveaways</h2>
+<p>Stickers are the #1 most popular trade show giveaway — they're lightweight, cheap to produce in bulk, and everyone loves them. Hand out branded stickers at exhibitions, store openings, or corporate events.</p>
+
+<h2>5. Social Media User-Generated Content</h2>
+<p>Unique, Instagram-worthy sticker designs encourage customers to share photos. Create fun, shareable sticker designs that customers will proudly display and photograph, giving you organic social media exposure.</p>
+
+<h2>Getting Started</h2>
+<p>At DSK Printers, we manufacture custom stickers in any quantity — from 100 to 100,000+. Choose from:</p>
+<ul>
+<li><strong>UV DTF Stickers</strong> — Waterproof, for hard surfaces</li>
+<li><strong>DTF Transfers</strong> — For fabric and apparel</li>
+<li><strong>Polycarbonate Stickers</strong> — Industrial-grade durability</li>
+</ul>
+<p>WhatsApp us your design and we'll send you a free sample!</p>`,
+    },
+  ]
+
+  for (const bp of blogPosts) {
+    const post = new BlogPost(bp)
+    await post.save()  // Triggers pre-save hooks (readTime, excerpt)
+  }
+
+  return { categories: categories.length, products: products.length, blogPosts: blogPosts.length }
 }

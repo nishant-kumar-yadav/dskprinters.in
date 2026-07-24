@@ -106,6 +106,81 @@ export const uploadImage = async (file) => {
   return res.json()
 }
 
+// ---------- GALLERY ----------
+
+export const fetchGallery = () => request('/gallery')
+
+export const fetchAdminGallery = () => request('/admin/gallery', { auth: true })
+
+export const createGalleryItem = (data) =>
+  request('/admin/gallery', { method: 'POST', body: JSON.stringify(data), auth: true })
+
+export const updateGalleryItem = (id, data) =>
+  request(`/admin/gallery/${id}`, { method: 'PUT', body: JSON.stringify(data), auth: true })
+
+export const deleteGalleryItem = (id) =>
+  request(`/admin/gallery/${id}`, { method: 'DELETE', auth: true })
+
+export const uploadMedia = async (file) => {
+  const form = new FormData()
+  form.append('media', file)
+  const res = await fetch(`${API_BASE}/admin/upload-media`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}` },
+    body: form,
+  })
+  if (!res.ok) {
+    let msg = 'Upload failed'
+    try {
+      msg = (await res.json()).error || msg
+    } catch {}
+    throw new Error(msg)
+  }
+  return res.json()
+}
+
+// ---------- INSTAGRAM ----------
+
+export const fetchInstagramStatus = () =>
+  request('/admin/instagram/status', { auth: true })
+
+export const fetchInstagramMedia = (cursor = null, limit = 25) => {
+  const params = new URLSearchParams({ limit: String(limit) })
+  if (cursor) params.set('cursor', cursor)
+  return request(`/admin/instagram/media?${params}`, { auth: true })
+}
+
+export const importInstagramPost = (data) =>
+  request('/admin/instagram/import', { method: 'POST', body: JSON.stringify(data), auth: true })
+
+export const refreshInstagramToken = () =>
+  request('/admin/instagram/refresh-token', { method: 'POST', auth: true })
+
+// ---------- BLOG ----------
+
+export const fetchBlogPosts = (page = 1, category = 'all') => {
+  const params = new URLSearchParams({ page: String(page) })
+  if (category && category !== 'all') params.set('category', category)
+  return request(`/blog?${params}`)
+}
+
+export const fetchBlogPost = (slug) => request(`/blog/${slug}`)
+
+export const fetchBlogCategories = () => request('/blog/categories')
+
+export const fetchAdminBlogPosts = () => request('/admin/blog', { auth: true })
+
+export const fetchAdminBlogPost = (id) => request(`/admin/blog/${id}`, { auth: true })
+
+export const createBlogPost = (data) =>
+  request('/admin/blog', { method: 'POST', body: JSON.stringify(data), auth: true })
+
+export const updateBlogPost = (id, data) =>
+  request(`/admin/blog/${id}`, { method: 'PUT', body: JSON.stringify(data), auth: true })
+
+export const deleteBlogPost = (id) =>
+  request(`/admin/blog/${id}`, { method: 'DELETE', auth: true })
+
 // Company constants
 export const COMPANY = {
   name: 'DSK Printers',

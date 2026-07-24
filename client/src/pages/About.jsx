@@ -1,8 +1,9 @@
+import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { COMPANY } from '../api.js'
 import { useReveal } from '../hooks/useReveal.js'
 import CTABand from '../components/CTABand.jsx'
-import { Factory, Layers, FileText, Truck, Clock, ShieldCheck, CheckCircle } from 'lucide-react'
+import { Factory, Layers, FileText, Truck, Clock, ShieldCheck, CheckCircle, ArrowRight } from 'lucide-react'
 import './pages.css'
 
 const reasons = [
@@ -154,6 +155,20 @@ export default function About() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Factory Gallery CTA */}
+      <section className="section section-alt" style={{ textAlign: 'center' }}>
+        <div className="container reveal">
+          <span className="section-eyebrow">See It Yourself</span>
+          <h2 className="section-title" style={{ marginBottom: 8 }}>Take a Factory Tour</h2>
+          <p className="section-sub" style={{ marginBottom: 20 }}>
+            Watch our machines running, see our quality checks, and browse finished product photos.
+          </p>
+          <Link to="/gallery" className="btn btn-primary">
+            View Factory Gallery <ArrowRight size={16} aria-hidden="true" />
+          </Link>
         </div>
       </section>
 

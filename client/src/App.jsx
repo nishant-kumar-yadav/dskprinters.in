@@ -16,6 +16,9 @@ import Contact from './pages/Contact.jsx'
 import SeoLandingPage from './pages/SeoLandingPage.jsx'
 import SearchResults from './pages/SearchResults.jsx'
 import PopularSearches from './pages/PopularSearches.jsx'
+import Gallery from './pages/Gallery.jsx'
+import Blog from './pages/Blog.jsx'
+import BlogPostPage from './pages/BlogPost.jsx'
 import Admin from './admin/Admin.jsx'
 import NotFound from './pages/NotFound.jsx'
 
@@ -54,6 +57,9 @@ export default function App() {
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/popular-searches" element={<PopularSearches />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/s/:keyword" element={<SeoLandingPage />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="*" element={<NotFound />} />

@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { Home, Package, Phone, MessageCircle } from 'lucide-react'
-import { COMPANY } from '../api.js'
+import { Home, Package, Image, MessageCircle } from 'lucide-react'
 import { useQuoteModal } from './QuoteModal.jsx'
 import './widgets.css'
 
@@ -17,14 +16,14 @@ export default function MobileBottomNav() {
         <Package size={20} aria-hidden="true" />
         <span>Products</span>
       </NavLink>
+      <NavLink to="/gallery" className={({ isActive }) => `bottom-nav-item${isActive ? ' active' : ''}`}>
+        <Image size={20} aria-hidden="true" />
+        <span>Gallery</span>
+      </NavLink>
       <button className="bottom-nav-item bottom-nav-cta" onClick={() => openQuote({ source: 'bottom_nav' })}>
         <MessageCircle size={20} aria-hidden="true" />
         <span>Quote</span>
       </button>
-      <a href={`tel:${COMPANY.phone}`} className="bottom-nav-item">
-        <Phone size={20} aria-hidden="true" />
-        <span>Call</span>
-      </a>
     </nav>
   )
 }

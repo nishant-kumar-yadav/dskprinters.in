@@ -10,8 +10,8 @@
   --gradient: linear-gradient(135deg, #dc2626 0%, #1d4ed8 100%);
 
   /* Neutrals (Clean Light Theme) */
-  --bg: #ffffff;
-  --surface: #f8fafc;
+  --bg: #ffffff;       /* Pure white — product images render true */
+  --surface: #f1f5f9;  /* Noticeably lighter blue-gray for alternating sections */
   --text: #0f172a;     /* Deep Navy Slate */
   --muted: #64748b;    /* Slate 400 */
   --border: #e2e8f0;    /* Light Gray border */
@@ -42,14 +42,19 @@
 html {
   scroll-behavior: smooth;
   background: var(--bg);
+  overflow-x: hidden;
 }
 
 body {
   font-family: var(--font-body);
   color: var(--text);
-  background: var(--bg);
+  background:
+    radial-gradient(circle, rgba(0, 0, 0, 0.03) 1px, transparent 1px)
+    0 0 / 20px 20px,
+    var(--bg);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5 {
@@ -88,7 +93,7 @@ input, textarea, select {
 }
 
 .section {
-  padding: 72px 0;
+  padding: 56px 0;
 }
 
 .section-head {
@@ -96,6 +101,13 @@ input, textarea, select {
   flex-direction: column;
   gap: 10px;
   margin-bottom: 40px;
+}
+
+@media (max-width: 767px) {
+  .section-head {
+    margin-bottom: 24px;
+    gap: 8px;
+  }
 }
 
 .section-eyebrow {
@@ -370,6 +382,6 @@ input, textarea, select {
 }
 
 @media (max-width: 767px) {
-  .section { padding: 48px 0; }
+  .section { padding: 28px 0; }
   body.has-bottom-nav { padding-bottom: 76px; }
 }

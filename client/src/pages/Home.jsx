@@ -13,9 +13,11 @@ import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react'
-import { fetchProducts, fetchCategories, COMPANY } from '../api.js'
+import { fetchProducts, fetchCategories, fetchGallery, COMPANY } from '../api.js'
 import { useQuoteModal } from '../components/QuoteModal.jsx'
 import ProductCard from '../components/ProductCard.jsx'
+import FactoryStories from '../components/FactoryStories.jsx'
+import VideoReels from '../components/VideoReels.jsx'
 import { useReveal } from '../hooks/useReveal.js'
 import './pages.css'
 
@@ -100,6 +102,14 @@ export default function Home() {
 
   const featured = (products || []).filter((p) => p.featured).slice(0, 8)
   const topCategories = (categories || []).slice(0, 8)
+
+  const { data: galleryData } = useQuery({
+    queryKey: ['gallery'],
+    queryFn: fetchGallery,
+  })
+  const storyGroups = galleryData?.storyGroups || {}
+  const reels = galleryData?.reels || []
+  const hasGalleryContent = Object.keys(storyGroups).some((k) => storyGroups[k]?.length > 0) || reels.length > 0
 
   const heroProducts = (products || []).filter((p) => p.showInHero).map((p) => ({
     title: p.name,
@@ -270,8 +280,38 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Inside DSK Printers — Gallery Teaser */}
+      {hasGalleryContent && (
+        <section className="section section-alt">
+          <div className="container">
+            <div className="section-head reveal">
+              <span className="section-eyebrow">Behind the Scenes</span>
+              <h2 className="section-title">Inside DSK Printers</h2>
+              <p className="section-sub">
+                Take a look inside our Delhi factory — see our machines, process, and finished products.
+              </p>
+            </div>
+            {Object.keys(storyGroups).some((k) => storyGroups[k]?.length > 0) && (
+              <div className="reveal">
+                <FactoryStories storyGroups={storyGroups} compact />
+              </div>
+            )}
+            {reels.length > 0 && (
+              <div className="reveal">
+                <VideoReels reels={reels} maxItems={4} />
+              </div>
+            )}
+            <div className="section-cta reveal">
+              <Link to="/gallery" className="btn btn-primary">
+                View Full Gallery <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Featured products */}
-      <section className="section section-alt">
+      <section className="section">
         <div className="container">
           <div className="section-head reveal">
             <span className="section-eyebrow">Best Sellers</span>
@@ -287,7 +327,7 @@ export default function Home() {
       </section>
 
       {/* Why us */}
-      <section className="section">
+      <section className="section section-alt">
         <div className="container">
           <div className="section-head reveal">
             <span className="section-eyebrow">Why DSK Printers</span>

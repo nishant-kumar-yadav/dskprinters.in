@@ -25,3 +25,17 @@ dsk-printers-clone.zip
 v0-temp/
 test.js
 server/test-email.js
+
+# Original media files (already copied to client/public/)
+media/
+Printers PVT. LTD - 1.png
+
+# One-off utility scripts (not needed in production)
+scripts/
+server/scripts/
+
+# Generated data / JSON dumps (already imported to DB)
+server/data/
+
+# Server dev helpers
+server/createPlaceholder.js

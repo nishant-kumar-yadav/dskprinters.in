@@ -133,6 +133,12 @@
   font-size: 0.88rem;
 }
 
+@media (min-width: 768px) {
+  .navbar-phone {
+    display: inline-flex;
+  }
+}
+
 .navbar-phone:hover { color: var(--blue); }
 
 .navbar-cta {

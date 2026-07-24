@@ -8,6 +8,8 @@ import { mongoSanitize } from './middleware/sanitize.js'
 import productRoutes from './routes/products.js'
 import leadRoutes from './routes/leads.js'
 import adminRoutes from './routes/admin.js'
+import galleryRoutes from './routes/gallery.js'
+import blogRoutes from './routes/blog.js'
 import { seedDatabase } from './seedData.js'
 
 const app = express()
@@ -39,6 +41,8 @@ const loginLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 10, standardHead
 app.get('/', (req, res) => res.json({ status: 'DSK Printers API running', version: '1.0.0' }))
 
 app.use('/api/products', productRoutes)
+app.use('/api/gallery', galleryRoutes)
+app.use('/api/blog', blogRoutes)
 app.use('/api/leads', leadLimiter, leadRoutes)
 app.use('/api/admin/login', loginLimiter)
 app.use('/api/admin', adminRoutes)

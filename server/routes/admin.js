@@ -6,6 +6,9 @@ import Product from '../models/Product.js'
 import Category from '../models/Category.js'
 import { requireAdmin, JWT_SECRET } from '../middleware/auth.js'
 import cloudinary, { cloudinaryEnabled } from '../config/cloudinary.js'
+import GalleryItem from '../models/GalleryItem.js'
+import BlogPost from '../models/BlogPost.js'
+import instagramRoutes from './instagram.js'
 
 const router = Router()
 
@@ -21,6 +24,18 @@ const upload = multer({
   },
 })
 
+// Media upload — images (5MB) + videos (50MB)
+const mediaUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 50 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    const imageTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
+    const videoTypes = ['video/mp4', 'video/webm', 'video/quicktime', 'video/x-msvideo']
+    const ok = [...imageTypes, ...videoTypes].includes(file.mimetype)
+    cb(ok ? null : new Error('Only images (JPEG, PNG, WebP, GIF) and videos (MP4, WebM, MOV) are allowed'), ok)
+  },
+})
+
 // POST /api/admin/login
 router.post('/login', (req, res) => {
   const { username, password } = req.body || {}
@@ -33,6 +48,9 @@ router.post('/login', (req, res) => {
 
 // Everything below requires admin JWT
 router.use(requireAdmin)
+
+// Instagram integration routes (admin-only)
+router.use('/instagram', instagramRoutes)
 
 // POST /api/admin/upload — Cloudinary image upload
 router.post('/upload', upload.single('image'), async (req, res, next) => {
@@ -64,14 +82,15 @@ router.get('/stats', async (req, res, next) => {
   try {
     const startOfDay = new Date()
     startOfDay.setHours(0, 0, 0, 0)
-    const [totalLeads, todayLeads, newLeads, products, categories] = await Promise.all([
+    const [totalLeads, todayLeads, newLeads, products, categories, blogPosts] = await Promise.all([
       Lead.countDocuments(),
       Lead.countDocuments({ createdAt: { $gte: startOfDay } }),
       Lead.countDocuments({ status: 'new' }),
       Product.countDocuments(),
       Category.countDocuments(),
+      BlogPost.countDocuments(),
     ])
-    res.json({ totalLeads, todayLeads, newLeads, products, categories })
+    res.json({ totalLeads, todayLeads, newLeads, products, categories, blogPosts })
   } catch (err) {
     next(err)
   }
@@ -213,6 +232,182 @@ router.delete('/categories/:id', async (req, res, next) => {
   try {
     const category = await Category.findByIdAndDelete(req.params.id)
     if (!category) return res.status(404).json({ error: 'Category not found' })
+    res.json({ ok: true })
+  } catch (err) {
+    next(err)
+  }
+})
+
+// --- Gallery CRUD ---
+
+// POST /api/admin/upload-media — Cloudinary image OR video upload
+router.post('/upload-media', mediaUpload.single('media'), async (req, res, next) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: 'No file provided' })
+    if (!cloudinaryEnabled) {
+      const b64 = req.file.buffer.toString('base64')
+      return res.json({ url: `data:${req.file.mimetype};base64,${b64}`, provider: 'inline' })
+    }
+
+    const isVideo = req.file.mimetype.startsWith('video/')
+    const uploadOptions = {
+      folder: 'dskprinters/gallery',
+      resource_type: isVideo ? 'video' : 'image',
+    }
+
+    if (!isVideo) {
+      uploadOptions.transformation = [{ width: 1200, height: 1200, crop: 'limit' }, { quality: 'auto' }]
+    } else {
+      // Auto quality + limit resolution for videos
+      uploadOptions.eager = [{ width: 720, crop: 'limit', quality: 'auto' }]
+      uploadOptions.eager_async = true
+    }
+
+    const result = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        uploadOptions,
+        (err, out) => (err ? reject(err) : resolve(out))
+      )
+      stream.end(req.file.buffer)
+    })
+
+    const response = {
+      url: result.secure_url,
+      publicId: result.public_id,
+      provider: 'cloudinary',
+      type: isVideo ? 'video' : 'image',
+      width: result.width,
+      height: result.height,
+      duration: result.duration || null,
+    }
+
+    // Auto-generate thumbnail for videos
+    if (isVideo) {
+      response.thumbnail = result.secure_url.replace(/\.mp4$|\.webm$|\.mov$/i, '.jpg')
+    }
+
+    res.json(response)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// GET /api/admin/gallery — all gallery items (including hidden)
+router.get('/gallery', async (req, res, next) => {
+  try {
+    const items = await GalleryItem.find().sort({ section: 1, order: 1, createdAt: -1 }).lean()
+    res.json(items)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// POST /api/admin/gallery
+router.post('/gallery', async (req, res, next) => {
+  try {
+    const item = await GalleryItem.create(req.body)
+    res.status(201).json(item)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// PUT /api/admin/gallery/:id
+router.put('/gallery/:id', async (req, res, next) => {
+  try {
+    const item = await GalleryItem.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    })
+    if (!item) return res.status(404).json({ error: 'Gallery item not found' })
+    res.json(item)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// DELETE /api/admin/gallery/:id
+router.delete('/gallery/:id', async (req, res, next) => {
+  try {
+    const item = await GalleryItem.findByIdAndDelete(req.params.id)
+    if (!item) return res.status(404).json({ error: 'Gallery item not found' })
+    // Clean up from Cloudinary
+    if (cloudinaryEnabled && item.url && item.url.includes('res.cloudinary.com')) {
+      try {
+        const isVideo = item.type === 'video'
+        const match = item.url.match(/dskprinters\/gallery\/[^./]+/)
+        if (match) {
+          await cloudinary.uploader.destroy(match[0], { resource_type: isVideo ? 'video' : 'image' })
+        }
+      } catch {}
+    }
+    res.json({ ok: true })
+  } catch (err) {
+    next(err)
+  }
+})
+
+// --- Blog CRUD ---
+
+// GET /api/admin/blog — all posts (including drafts)
+router.get('/blog', async (req, res, next) => {
+  try {
+    const posts = await BlogPost.find()
+      .select('-content')
+      .sort({ createdAt: -1 })
+      .lean()
+    res.json(posts)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// GET /api/admin/blog/:id — single post with full content (for editing)
+router.get('/blog/:id', async (req, res, next) => {
+  try {
+    const post = await BlogPost.findById(req.params.id).lean()
+    if (!post) return res.status(404).json({ error: 'Blog post not found' })
+    res.json(post)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// POST /api/admin/blog
+router.post('/blog', async (req, res, next) => {
+  try {
+    const post = await BlogPost.create(req.body)
+    res.status(201).json(post)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// PUT /api/admin/blog/:id
+router.put('/blog/:id', async (req, res, next) => {
+  try {
+    const post = await BlogPost.findById(req.params.id)
+    if (!post) return res.status(404).json({ error: 'Blog post not found' })
+    Object.assign(post, req.body)
+    await post.save()  // Triggers pre-save hooks (readTime, excerpt)
+    res.json(post)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// DELETE /api/admin/blog/:id
+router.delete('/blog/:id', async (req, res, next) => {
+  try {
+    const post = await BlogPost.findByIdAndDelete(req.params.id)
+    if (!post) return res.status(404).json({ error: 'Blog post not found' })
+    // Clean up cover image from Cloudinary if applicable
+    if (cloudinaryEnabled && post.coverImage && post.coverImage.includes('res.cloudinary.com')) {
+      try {
+        const match = post.coverImage.match(/dskprinters\/[^./]+/)
+        if (match) await cloudinary.uploader.destroy(match[0])
+      } catch {}
+    }
     res.json({ ok: true })
   } catch (err) {
     next(err)
