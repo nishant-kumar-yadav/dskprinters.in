@@ -4,6 +4,7 @@ import nodemailer from 'nodemailer';
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || 'smtp.ethereal.email',
   port: process.env.SMTP_PORT || 587,
+  secure: process.env.SMTP_PORT == 465, // true for 465, false for other ports
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
@@ -13,7 +14,7 @@ const transporter = nodemailer.createTransport({
 export const sendAdminNotification = async (lead) => {
   try {
     const mailOptions = {
-      from: '"DSK Printers" <noreply@dskprinters.in>',
+      from: `"DSK Printers" <${process.env.SMTP_USER}>`,
       to: process.env.ADMIN_EMAIL || 'dskprintingpress@gmail.com',
       subject: `New Quote Request from ${lead.name}`,
       text: `You have received a new quote request.\n\nName: ${lead.name}\nPhone: ${lead.phone}\nProduct: ${lead.product || 'N/A'}\nQuantity: ${lead.quantity || 'N/A'}\nMessage: ${lead.message || 'N/A'}`,
