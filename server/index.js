@@ -75,15 +75,6 @@ connectDB()
   .then(() => {
     app.listen(PORT, () => {
       console.log(`[server] DSK Printers API listening on port ${PORT}`)
-      // Keep-alive self-ping for Render free tier
-      const SELF_URL = process.env.RENDER_EXTERNAL_URL
-      if (SELF_URL) {
-        setInterval(async () => {
-          try {
-            await fetch(`${SELF_URL}/`)
-          } catch {}
-        }, 14 * 60 * 1000)
-      }
     })
   })
   .catch((err) => {
