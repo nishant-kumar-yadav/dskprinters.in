@@ -6,7 +6,7 @@
 // Plain ESM with no browser/React dependencies so Node scripts can import it.
 // ---------------------------------------------------------------------------
 
-export const SITE_URL = 'https://dskprinters.in'
+export const SITE_URL = 'https://www.dskprinters.in'
 
 // Each SEO "product" maps a human name + slug fragment to the real catalog
 // category slugs whose products should be shown on that landing page.
