@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-Sitemap: https://dskprinters.in/sitemap.xml
+Sitemap: https://www.dskprinters.in/sitemap.xml
