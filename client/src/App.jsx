@@ -4,7 +4,7 @@ import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import WhatsAppButton from './components/WhatsAppButton.jsx'
 import MobileBottomNav from './components/MobileBottomNav.jsx'
-import ColdStartBanner from './components/ColdStartBanner.jsx'
+
 import { QuoteModalProvider } from './components/QuoteModal.jsx'
 import Home from './pages/Home.jsx'
 import About from './pages/About.jsx'
@@ -45,7 +45,7 @@ export default function App() {
   return (
     <QuoteModalProvider>
       <ScrollToTop />
-      <ColdStartBanner />
+
       <Navbar />
       <main>
         <Routes>
