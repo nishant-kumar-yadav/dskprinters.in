@@ -78,9 +78,9 @@ export default function Navbar() {
         </nav>
 
         <div className="navbar-actions">
-          <a href={`tel:${COMPANY.phone}`} className="navbar-phone">
+          <a href={`tel:${COMPANY.phone}`} className="navbar-phone" aria-label={`Call ${COMPANY.phone}`}>
             <Phone size={16} aria-hidden="true" />
-            {COMPANY.phone}
+            <span className="navbar-phone-text">{COMPANY.phone}</span>
           </a>
           <button className="navbar-search-btn" aria-label="Search Products" onClick={() => setSearchOpen(true)}>
             <Search size={18} />
