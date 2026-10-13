@@ -73,7 +73,12 @@ export default function Footer() {
           <p>
             © {new Date().getFullYear()} {COMPANY.name}. All rights reserved.
           </p>
-          <p>DTF &amp; UV DTF Sticker Manufacturer — New Delhi, India</p>
+          <nav className="footer-legal" aria-label="Legal pages">
+            <Link to="/privacy-policy">Privacy Policy</Link>
+            <Link to="/terms-and-conditions">Terms &amp; Conditions</Link>
+            <Link to="/refund-policy">Refund Policy</Link>
+            <Link to="/shipping-policy">Shipping Policy</Link>
+          </nav>
         </div>
       </div>
     </footer>

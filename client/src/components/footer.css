@@ -132,3 +132,19 @@
   font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.4);
 }
+
+.footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+
+.footer-legal a {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.45);
+  transition: color 0.15s ease;
+}
+
+.footer-legal a:hover {
+  color: #fff;
+}

@@ -21,6 +21,10 @@ import Blog from './pages/Blog.jsx'
 import BlogPostPage from './pages/BlogPost.jsx'
 import Admin from './admin/Admin.jsx'
 import NotFound from './pages/NotFound.jsx'
+import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
+import TermsConditions from './pages/TermsConditions.jsx'
+import RefundPolicy from './pages/RefundPolicy.jsx'
+import ShippingPolicy from './pages/ShippingPolicy.jsx'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -62,6 +66,10 @@ export default function App() {
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/s/:keyword" element={<SeoLandingPage />} />
           <Route path="/search" element={<SearchResults />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-and-conditions" element={<TermsConditions />} />
+          <Route path="/refund-policy" element={<RefundPolicy />} />
+          <Route path="/shipping-policy" element={<ShippingPolicy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
