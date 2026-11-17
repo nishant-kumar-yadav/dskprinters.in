@@ -54,7 +54,7 @@ const features = [
 const heroSlides = [
   {
     title: "UV DTF Stickers",
-    price: "₹2.50 / sq. inch onwards",
+    price: "₹0.70 / sq. inch onwards",
     desc: "Permanent scratch-proof stickers for metal, glass, plastic, wood and leather branding.",
     badge: "Most Popular for Merch",
     image: "/images/cat-uv-dtf.webp",
@@ -62,7 +62,7 @@ const heroSlides = [
   },
   {
     title: "DTF Stickers",
-    price: "₹1.20 / sq. inch onwards",
+    price: "₹0.15 / sq. inch onwards",
     desc: "High stretch garment transfer stickers for fabrics, t-shirts, caps, bags and uniforms.",
     badge: "Garment Decoration Standard",
     image: "/images/cat-dtf.webp",
